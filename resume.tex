@@ -75,6 +75,21 @@
   \item 支持用户上传自定义模板并自动识别幻灯片中的布局和嵌套逻辑结构信息，生成对应的幻灯片模板文件，模板规则涵盖目前已知的幻灯片类型。
 \end{itemize}
 
+\datedsubsection{\textbf{AI 客服中台}}{2026.08 -- 至今}
+\role{项目角色}{独立开发}
+\href{https://github.com/EmiyaredA/AI-customer}{github.com/EmiyaredA/AI-customer}
+
+\textbf{技术栈：}Python、FastAPI、PostgreSQL、Chroma、React、TypeScript、WebSocket。
+
+\textbf{项目简介：}面向正式交付的 AI 客服平台，覆盖 Bot 配置与发布、知识库检索、多轮文本与实时语音、人工接管、网站嵌入和 Chrome 坐席扩展。Studio、嵌入页与扩展共用供应商无关的运行时契约；PostgreSQL 为协调真源，Chroma 与上传文件作为可重建投影。
+\begin{itemize}
+  \item \textbf{知识库与双路径检索。}分块与向量化分离，支持结构切分、QA 抽取和 LLM 索引摘要。运行态不预取全文，由 Agent 以多条检索词调用知识库工具，单库内做向量检索与 BM25 融合，再按发布快照去重截断。生成式检索以完整正文为事实源，模型只选择证据范围，目录浏览、片段搜索和原文读取由确定性工具完成。
+  \item \textbf{配置智能优化与发布一致性。}用真实会话归纳证据并生成草稿改进方案，支持字段范围限定、会话重点引用和并排 Diff 审核。草稿写入与发布以 revision CAS 为前置条件，版本冲突返回当前快照且不自动覆盖。渠道发布在同一事务内提交版本、知识关联和运行投影，运行态只读取不可变快照。
+  \item \textbf{会话回合与人工接管。}REST 与 SSE 共用回合协调器：先持久化用户消息，模型、检索和工具循环不持有写事务，结果检查点原子提交助手回复、工作流状态和调用日志。断连与取消只停止尚未开始的检查点。坐席接管按会话停用 AI，邀约、心跳和恢复由持久任务推进，结案后原版本 AI 恢复。
+  \item \textbf{实时语音与插话。}Studio 试用页与网站嵌入共用浏览器插话检测和 Realtime 协议，DashScope 与 SenseAudio 的协议差异收敛在后端适配层。本地 VAD 先做可恢复暂停，疑似回声从原位置续播，只有暂停后近端人声仍成立才通知供应商打断。
+  \item \textbf{多端契约、嵌入安全与检索评测。}\texttt{BotBuildSpec} 作为配置唯一真源，由 OpenAPI 生成管理端类型并阻止契约漂移；三端共用同一运行时客户端。网站嵌入由接入方后端持有渠道密钥，页面只换取短时 token。检索评测与功能测试分离：生成式库与向量库使用相同检索词成对比较；语音集包含 80 个语义脚本、139 条干净音频和 200 个分层场景。
+\end{itemize}
+
 \section{专业技能}
 \begin{itemize}
   \item \textbf{编程语言：}Python、JavaScript、HTML/CSS、SQL、C、C++。
