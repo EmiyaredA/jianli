@@ -1,0 +1,1250 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="童浩的源码核对版面试准备手册，54 道项目问题、回答、追问与源码依据。"><title>童浩 · 项目面试准备手册</title><style>
+.applications{margin:22px 0 25px;padding-top:18px;border-top:1px solid var(--line)}.applications h4{font-size:14px;margin:0 0 10px;color:var(--teal)}.scenario-intro{font-size:12px;color:var(--muted);margin:10px 0 14px;line-height:1.85}.scenario-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.scenario-card{background:#edf4ef;border:1px solid #dbe8df;border-radius:7px;padding:15px;min-width:0}.scenario-card h5{font-size:13px;margin:0 0 9px;line-height:1.7}.scenario-card p{font-size:12px;color:#49615c;line-height:1.9;margin:0 0 12px}.scenario-card small{display:block;font-size:10px;color:#657c72;line-height:1.7;border-top:1px solid #cfdfd3;padding-top:9px}@media(max-width:1050px){.scenario-grid{grid-template-columns:1fr}}@media print{.scenario-grid{display:block}.scenario-card{break-inside:avoid;margin-bottom:8px}.scenario-card p{font-size:9pt}.applications h4{font-size:10pt}}
+
+:root{--bg:#f5f4ef;--paper:#fffefa;--ink:#182e42;--muted:#687783;--line:#dce3e2;--teal:#176b65;--light:#e8f2ed;--amber:#92601d;--amberbg:#fbf2df;--shadow:0 12px 32px #233e4c08}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}a{color:var(--teal);text-underline-offset:3px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #2e9d94;outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}[hidden]{display:none!important}.layout{display:grid;grid-template-columns:255px minmax(0,1fr);max-width:1600px;margin:auto}.sidebar{height:100vh;position:sticky;top:0;padding:37px 23px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}.brand{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:2px;color:var(--teal);margin-bottom:30px}.sidebar h3{font-size:19px;margin:0 0 5px}.sidebar .sub{font-size:12px;color:var(--muted);margin:0 0 24px}nav a{color:var(--ink);text-decoration:none;display:flex;gap:10px;align-items:center;font-size:13px;padding:11px 6px;border-radius:6px}nav a:hover{background:var(--light)}nav a span{font:11px ui-monospace,monospace;color:var(--teal)}nav a small{margin-left:auto;color:var(--muted)}.side-links{border-top:1px solid var(--line);padding-top:16px;margin-top:20px;display:grid;gap:10px;font-size:12px}.side-footer{margin-top:auto;padding-top:30px;color:var(--muted);font-size:11px}.progress-track{height:5px;background:#dce5e0;border-radius:9px;overflow:hidden;margin-top:8px}.progress-track div{height:100%;background:var(--teal);width:0;transition:width .2s}.main{padding:55px clamp(25px,4.2vw,72px) 60px;min-width:0;max-width:1190px}.eyebrow{color:var(--teal);font-size:11px;letter-spacing:2px;font-weight:700}.hero h1{font-size:clamp(29px,3.5vw,47px);line-height:1.25;letter-spacing:-1px;margin:17px 0 19px;font-weight:650}.hero .lead{max-width:750px;color:#526573;font-size:16px}.hero .meta{font-size:12px;color:var(--muted);display:flex;gap:15px;flex-wrap:wrap;margin-top:23px}.hero .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:32px}.stat{padding:20px 0}.stat+.stat{padding-left:24px;border-left:1px solid var(--line)}.stat strong{font:500 28px/1.2 ui-monospace,monospace;display:block}.stat small{color:var(--muted);font-size:12px}.guide{margin:28px 0 35px;background:var(--light);border-radius:10px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:28px}.guide h3{font-size:14px;margin:0 0 5px}.guide p{font-size:13px;margin:0;color:#47605f}.toolbar{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:17px;margin-bottom:14px;box-shadow:var(--shadow)}.search-row{display:grid;grid-template-columns:1fr 180px;gap:10px}.search-row input,.search-row select{width:100%;min-width:0;border:1px solid var(--line);border-radius:7px;background:#fff;padding:10px 12px;color:var(--ink);font-size:13px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:6px;padding:7px 12px;font-size:12px;line-height:1.5}button:hover{border-color:#8fa9a3;background:#f5faf7}button.active,button.primary{background:var(--teal);color:white;border-color:var(--teal)}.filter-result{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;margin:0 2px 35px}.question-section{margin:0 0 55px;scroll-margin-top:20px}.section-title{display:flex;align-items:center;gap:17px;margin-bottom:18px}.section-num{display:flex;align-items:center;justify-content:center;border:1px solid #9eb9b0;border-radius:8px;width:44px;height:44px;font:16px ui-monospace,monospace;color:var(--teal);flex:none}.section-title h2{font-size:23px;line-height:1.3;margin:0 0 3px;letter-spacing:-.3px}.section-title p{font-size:12px;color:var(--muted);margin:0}.count{margin-left:auto;font-size:12px;white-space:nowrap;color:var(--muted)}.flow{display:flex;gap:0;flex-wrap:wrap;margin:0 0 19px;padding:13px 16px;background:#eaf0ed;color:#52736b;border-radius:8px;font-size:11px}.flow span+span:before{content:'→';padding:0 16px;color:#8ba59d}.question{background:var(--paper);border:1px solid var(--line);border-radius:9px;margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:25px}.question.selected{box-shadow:0 0 0 3px #4f9b8f55}.qa>summary{padding:19px 21px;display:flex;align-items:flex-start;gap:15px;cursor:pointer;list-style:none}.qa>summary::-webkit-details-marker,.source>summary::-webkit-details-marker{display:none}.qid{font:11px/1.8 ui-monospace,monospace;color:#70898b;padding-top:2px;flex:none}.qheading{font-size:16px;font-weight:600;line-height:1.55;flex:1;min-width:0}.qmeta{display:flex;gap:12px;font-size:10px;line-height:1.5;font-weight:400;margin-top:8px;color:var(--muted);align-items:center}.badge{border-radius:4px;padding:2px 7px;display:inline-block}.badge.ok{color:#2c7565;background:#eaf3ee}.badge.gap{color:var(--amber);background:var(--amberbg)}.chevron{font-size:17px;color:#829a98}.qa[open] .chevron{transform:rotate(45deg)}.qa[open]>summary{border-bottom:1px solid var(--line)}.answer{padding:23px 27px 25px}.answer-label{font-weight:700;color:var(--teal);font-size:12px;letter-spacing:.5px}.answer-label span{font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0;margin-left:10px}.oral{font-size:15px;line-height:1.95;margin:12px 0 22px}.oral p{margin:0}.deeper{display:grid;grid-template-columns:1fr 1fr;gap:25px;border-top:1px solid var(--line);padding-top:16px}.deeper h4{font-size:12px;margin:0 0 8px;color:var(--ink)}.deeper p{font-size:13px;color:#536574;margin:0 0 8px;line-height:1.85}.boundary{background:#fbf5e9;border-left:3px solid #c6a46e;padding:11px 14px;margin-top:17px}.boundary b{font-size:11px;color:var(--amber)}.boundary p{font-size:12px;line-height:1.8;margin:3px 0 0;color:#786441}.refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.ref{font-size:10px;border:1px solid var(--line);border-radius:4px;padding:3px 7px;text-decoration:none;max-width:100%;overflow-wrap:anywhere}.ref:hover{background:var(--light)}.practice{border-top:1px solid var(--line);margin-top:20px;padding-top:15px;display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:12px}.practice input{accent-color:var(--teal);vertical-align:middle}.small{padding:4px 9px;font-size:11px}.note-label{display:block;font-size:11px;color:var(--muted);margin:14px 0 5px}textarea{width:100%;resize:vertical;padding:10px;border:1px solid var(--line);border-radius:5px;background:#fcfcf8;color:var(--ink);font-size:12px;line-height:1.8}.muted{color:var(--muted);font-size:12px}.empty{padding:60px;text-align:center;border:1px dashed var(--line);border-radius:12px;margin-bottom:40px}.appendix{border-top:1px solid var(--line);padding-top:30px;margin-top:30px;scroll-margin-top:20px}.appendix h2{font-size:25px;margin:0 0 12px}.appendix .intro{color:var(--muted);font-size:13px;margin-bottom:22px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;background:var(--paper);font-size:12px;line-height:1.8;min-width:700px}th,td{padding:15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:#e9f0ec;font-size:11px;color:#506d66}td:first-child{font-weight:600;min-width:130px}td:last-child{white-space:nowrap;color:var(--muted);font:10px/1.9 ui-monospace,monospace}tbody tr:last-child td{border:0}.source{border:1px solid var(--line);border-radius:7px;margin-bottom:8px;background:var(--paper);scroll-margin-top:24px}.source>summary{font-size:12px;padding:12px 15px;cursor:pointer;list-style:none}.source>summary b{font:11px ui-monospace,monospace;color:var(--teal);display:inline-block;min-width:33px}.source-body{border-top:1px solid var(--line);padding:14px}.filepath{font:10px/1.8 ui-monospace,monospace;overflow-wrap:anywhere;margin-bottom:10px}.source-body pre{white-space:pre-wrap;word-break:break-word;background:#eef1ee;padding:14px;border-radius:5px;font:11px/1.9 ui-monospace,monospace;max-height:420px;overflow:auto}.source-body small{font-size:10px;color:var(--muted);overflow-wrap:anywhere;display:block}.repo{display:grid;grid-template-columns:40px 1fr 80px;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:11px}.repo span{overflow-wrap:anywhere;color:var(--muted)}.repo code{font-size:10px;text-align:right}.repo small{grid-column:2/4;color:var(--muted);font-size:10px}.method{border:1px solid var(--line);padding:20px;border-radius:9px;margin-bottom:22px;background:var(--paper)}.method p{font-size:12px;color:#526573;margin:0 0 10px}.method p:last-child{margin:0}.footer{padding-top:30px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:20px}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;border-radius:8px;padding:10px 18px;font-size:12px;z-index:10;box-shadow:var(--shadow);max-width:90vw}.print-only{display:none}
+@media(max-width:1050px){.layout{grid-template-columns:210px minmax(0,1fr)}.sidebar{padding:30px 15px}.main{padding:38px 25px}.deeper{grid-template-columns:1fr;gap:14px}.answer{padding:20px}.guide{gap:20px;padding:18px}.qheading{font-size:15px}.qa>summary{padding:17px}}
+@media(max-width:720px){.layout{display:block}.sidebar{height:auto;position:relative;padding:20px;border-right:0;border-bottom:1px solid var(--line);display:block}.brand{margin:0 0 8px;font-size:10px}.sidebar h3,.sidebar .sub,.side-links,.side-footer{display:none}nav{display:flex;gap:8px;overflow:auto;padding-top:8px;scrollbar-width:thin}nav a{white-space:nowrap;padding:7px 9px;border:1px solid var(--line);font-size:11px;gap:6px}nav a small{display:none}.main{padding:29px 17px 40px}.hero h1{font-size:32px}.hero .lead{font-size:14px}.hero .meta{gap:8px;font-size:10px}.stat strong{font-size:24px}.stat+.stat{padding-left:14px}.stat small{font-size:10px}.guide{grid-template-columns:1fr;gap:16px;margin:23px 0}.search-row{grid-template-columns:1fr}.toolbar{padding:12px}.controls{gap:6px}button{padding:7px 9px;font-size:11px}.filter-result{font-size:10px;gap:12px}.section-title{gap:12px}.section-title h2{font-size:20px}.section-title p{font-size:10px}.section-num{width:37px;height:37px;font-size:13px}.count{font-size:10px}.flow{font-size:10px;padding:10px}.flow span+span:before{padding:0 8px}.qid{font-size:10px}.qa>summary{gap:10px;padding:16px 13px}.qheading{font-size:14px}.answer{padding:18px 16px}.answer-label span{display:block;margin:3px 0 0}.oral{font-size:14px}.repo{grid-template-columns:35px 1fr}.repo code{grid-column:2;text-align:left}.repo small{grid-column:2}.footer{flex-direction:column;gap:4px}}
+@media print{@page{size:A4;margin:15mm 14mm}body{background:#fff;color:#111;font-size:10pt}.layout{display:block}.sidebar,.toolbar,.filter-result,.controls,.practice,.note-label,textarea,.toast,.guide,.footer a{display:none!important}.main{padding:0;max-width:none}.hero h1{font-size:28pt}.hero .stats{margin:15px 0}.stat{padding:10px 0}.stat strong{font-size:20pt}.hero .lead{font-size:10pt}.hero .meta{font-size:8pt}.question-section{margin-bottom:25px;break-before:auto}.section-title{margin-top:25px;break-after:avoid}.section-title h2{font-size:17pt}.flow{font-size:8pt;padding:8px;margin-bottom:10px}.question{box-shadow:none;border-radius:3px;overflow:visible;break-inside:auto}.qa>summary{padding:10px 12px;break-after:avoid}.qheading{font-size:11pt}.qid,.qmeta{font-size:7pt}.chevron{display:none}.answer{padding:12px}.oral{font-size:10pt;line-height:1.8;margin:8px 0 12px}.answer-label{font-size:8pt}.answer-label span{font-size:7pt}.deeper{display:block}.deeper div+div{margin-top:10px}.deeper p{font-size:9pt}.boundary{background:#fafafa;margin:10px 0}.boundary p{font-size:8pt}.refs{margin-top:8px}.ref{font-size:7pt}a{color:#234e4b;text-decoration:none}.source>summary{font-size:8pt}.source-body pre{font-size:7pt;max-height:none;overflow:visible}.source-body small{font-size:6pt}.source{break-inside:avoid}.appendix{break-before:page}.appendix h2{font-size:18pt}.table-wrap{overflow:visible}table{min-width:0;font-size:8pt}th,td{padding:7px}.repo{font-size:8pt}.footer{font-size:7pt}.print-only{display:block;font-size:8pt;color:#777}.question[hidden],.question-section[hidden]{display:block!important}.empty{display:none}.guide{display:none}}
+</style></head><body><div class="layout">
+<aside class="sidebar"><div class="brand">PROJECT / INTERVIEW</div><h3>面试准备手册</h3><p class="sub">童浩 · 源码核对版</p><nav aria-label="章节导航"><a href="#section-overview" data-nav="overview"><span>01</span>开场与简历主线<small>5</small></a><a href="#section-fpl" data-nav="fpl"><span>02</span>Future Props Lab<small>9</small></a><a href="#section-cs" data-nav="cs"><span>03</span>AI 客服中台<small>12</small></a><a href="#section-ppt" data-nav="ppt"><span>04</span>PPT Agent<small>10</small></a><a href="#section-note" data-nav="note"><span>05</span>笔记 AI<small>7</small></a><a href="#section-data" data-nav="data"><span>06</span>数据工程与 GRPO<small>7</small></a><a href="#section-cross" data-nav="cross"><span>07</span>综合与压力面<small>4</small></a></nav><div class="side-links"><a href="#gaps-section">优先补齐的证据</a><a href="#sources-section">源码索引与版本</a><button id="export">导出我的练习记录</button></div><div class="side-footer"><span id="progressText">已掌握 0 / 54</span><div class="progress-track"><div id="progressBar"></div></div><p>记录仅存在本机浏览器。<br>阅读内容无需联网。</p></div></aside>
+<main class="main"><header class="hero"><div class="eyebrow">SOURCE-VERIFIED INTERVIEW NOTES · 2026.11.12</div><h1>把做过的事，<br>讲清楚，也讲得住。</h1><p class="lead">围绕你的简历与四个本地项目，准备从开场介绍到技术深挖的回答。先讲业务与个人贡献，再讲实现、取舍和验证；每个关键判断都能追到源码或明确的证据缺口。</p><div class="meta"><span>对象：Agent / AI 应用 / 智能文档岗位</span><span>依据：当前简历与本地工作树</span><span>日期：2026-11-12 · 上海</span></div><div class="stats"><div class="stat"><strong>54</strong><small>问题与口述回答</small></div><div class="stat"><strong>04</strong><small>本地项目交叉核对</small></div><div class="stat"><strong>62</strong><small>源码 / 简历 / 论文定位</small></div></div></header>
+<div class="guide"><div><h3>先练主线，再练追问</h3><p>先看“必会”，用 45–90 秒口述，再展开解释。建议先练 Q01、Q03、Q15、Q19、Q20、Q27、Q32、Q38、Q46。</p></div><div><h3>事实、建议和缺口分开讲</h3><p>第一人称稿按简历编写；作者身份、个人贡献与历史数字仍需你确认。“改进建议”不代表已实现，“有测试”不代表本次运行通过。</p></div></div>
+<div class="toolbar" role="search" aria-label="问题检索"><div class="search-row"><input id="search" type="search" aria-label="搜索问题与回答" placeholder="搜索问题、回答或技术词，例如 RRF / 幂等 / 奖励…"><select id="project" aria-label="选择项目"><option value="">全部章节</option><option value="overview">开场与简历主线</option><option value="fpl">Future Props Lab</option><option value="cs">AI 客服中台</option><option value="ppt">PPT Agent</option><option value="note">笔记 AI</option><option value="data">数据工程与 GRPO</option><option value="cross">综合与压力面</option></select></div><div class="controls"><button id="must" aria-pressed="false">只看必会</button><button id="gaps" aria-pressed="false">只看待补证</button><button id="unlearned" aria-pressed="false">尚未掌握</button><button id="reset">重置筛选</button><button id="expand">展开答案</button><button id="collapse">收起答案</button><button class="primary" id="random">随机抽题</button><button id="print">打印 / 存为 PDF</button></div></div><div class="filter-result"><span id="resultCount">显示 54 / 54 题</span><span>点击题目展开 · 源码标签可跳转到具体摘录</span></div><p class="print-only">打印版已展开全部问题与源码摘录；本手册为静态源码核对与面试练习，不是运行验收报告。</p><div id="empty" class="empty" hidden>没有匹配的问题，请调整关键词或筛选条件。</div>
+<section class="question-section" id="section-overview" data-section="overview"><div class="section-title"><span class="section-num">01</span><div><h2>开场与简历主线</h2><p>先把角色、价值与个人贡献讲清楚</p></div><span class="count">5 题</span></div><div class="flow" aria-label="项目主线"><span>业务问题</span><span>个人贡献</span><span>关键方案</span><span>验证与局限</span></div><article class="question" id="Q01" data-group="overview" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q01</span><span class="qheading">请用 90 秒介绍一下自己。<span class="qmeta"><span class="badge ok">简历＋源码</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我目前在商汤做算法研究，方向是 Agent 应用和 AI 辅助创作。我做过 AI 客服中台、PPT Agent、笔记 AI，也有个人开源项目 Future Props Lab。几段经历的共同点，是把模型能力接到真实应用里：让模型能找到证据、调用业务能力、操作可编辑的内容，并通过校验和评测控制结果。客服项目可以重点讲生成式检索和服务运行，PPT 项目可以讲内容与版式匹配、图像页面重建；FPL 则体现我对 Agent 与应用协作方式的持续探索。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>按岗位选主线：Agent 岗优先客服与 FPL；智能文档岗优先 PPT；评测岗先讲数据工程。每个项目只点一个难点，等对方追问再展开，不一次报完所有技术名词。</p></div><div><h4>继续追问</h4><p>追问：你更偏算法还是工程？</p><p>答：我的优势是应用算法与工程结合，例如检索策略、结构匹配和证据评测，同时能把它们做成可运行、可追踪的应用。我不会把自己定位成做过基础模型预训练的人。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>任职时间、实习转正时间按当前简历说；没有核实的用户规模和收入不加入开场。</p></div>
+    <div class="refs"><a href="#source-R1" data-source="R1" class="ref">R1 · 当前简历：定位与经历</a><a href="#source-C4" data-source="C4" class="ref">C4 · RRF 的实际公式</a><a href="#source-P9" data-source="P9" class="ref">P9 · 递归编码、深度衰减及排序</a><a href="#source-F6" data-source="F6" class="ref">F6 · 先查回执，再检查版本</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q01"> 我已能脱稿回答</label><button class="small" data-copy="Q01">复制口述稿</button></div>
+    <label class="note-label" for="note-Q01">我的补充 / 真实案例</label><textarea id="note-Q01" data-note="Q01" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q02" data-group="overview" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q02</span><span class="qheading">四个项目之间有什么共同技术主线？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>主线是让模型围绕应用状态工作。笔记先把历史对话和资料整理成上下文；PPT 把内容转换为结构、版式和可编辑对象；客服需要证据、工具和会话状态；FPL 再把这些能力开放成 Agent 可以发现和调用的业务接口。越靠近真实使用，难点越从“生成得出来”转向“生成结果属于谁、基于哪个版本、能否安全写回、失败后如何核对”。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>可以用一条链说明：输入与上下文 → 模型规划或检索 → 受约束的业务操作 → 应用校验与提交 → 人工审阅和评测。四个项目的业务不同，状态与执行边界相通。</p></div><div><h4>继续追问</h4><p>追问：哪些部分不能通用？</p><p>答：工坊操作、客服工作流和 PPT 图层各有领域规则。我复用协议、回执和任务机制，业务校验仍归各模块。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>这是从当前实现提炼的总结，不要倒叙成早期就规划好的统一平台战略。</p></div>
+    <div class="refs"><a href="#source-N1" data-source="N1" class="ref">N1 · 历史对话与搜索配置</a><a href="#source-P16" data-source="P16" class="ref">P16 · 重建对象的结构化 schema</a><a href="#source-C11" data-source="C11" class="ref">C11 · 先提交用户消息，再等待外部工作</a><a href="#source-F5" data-source="F5" class="ref">F5 · 回执重放与请求指纹</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q02"> 我已能脱稿回答</label><button class="small" data-copy="Q02">复制口述稿</button></div>
+    <label class="note-label" for="note-Q02">我的补充 / 真实案例</label><textarea id="note-Q02" data-note="Q02" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q03" data-group="overview" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q03</span><span class="qheading">你说“独立搭建”，具体哪些是你做的？<span class="qmeta"><span class="badge gap">责任范围待本人确认</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>AI 客服中台、PPT Agent 和笔记 AI 都是我在商汤科技的项目，其中客服中台由我独立设计与开发；Future Props Lab 是个人开源项目。我会把公司项目归属与本人负责范围分开说明。客服我可以从配置、检索、工具到运行与发布逐层讲，FPL 可以讲业务接口和工程状态管理。模型、数据库、OCR、浏览器和第三方 Agent 都是我集成的基础能力；我的工作是选型、适配、编排、领域校验与交付，而不是声称这些基础组件由我实现。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>准备一张个人贡献表：需求与方案／亲自实现的文件与模块／复用的开源组件／协作者承担部分／历史版本。代码存在只能证明实现，不能单独证明作者身份或投入比例。</p></div><div><h4>继续追问</h4><p>追问：仓库里所有代码都是你写的吗？</p><p>答：不能这么概括。我会区分本人设计实现、AI 辅助生成、团队协作和第三方代码，并选自己能完整解释的提交和模块展开。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>PPT 解析路线的完整历史入口未在本次指定源码中定位；不要现场把其他仓库的能力并入这段经历。</p></div>
+    <div class="refs"><a href="#source-R1" data-source="R1" class="ref">R1 · 当前简历：定位与经历</a><a href="#source-F1" data-source="F1" class="ref">F1 · Agent 连接定义</a><a href="#source-P1" data-source="P1" class="ref">P1 · 重建单页入口</a><a href="#source-N1" data-source="N1" class="ref">N1 · 历史对话与搜索配置</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q03"> 我已能脱稿回答</label><button class="small" data-copy="Q03">复制口述稿</button></div>
+    <label class="note-label" for="note-Q03">我的补充 / 真实案例</label><textarea id="note-Q03" data-note="Q03" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q04" data-group="overview" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q04</span><span class="qheading">哪个项目最能体现你的技术能力？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>如果面向 Agent 应用岗位，我会选客服中台。它同时涉及知识检索、工具执行和持久会话，我最想展开的是生成式检索的证据边界：模型可以主动找资料，但最终只能提交本轮实际看过、正文版本一致的原文范围。这样把“模型觉得找到了”变成服务端能核验的结果，再用独立的检索评分分析效果。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>回答结构：业务问题 → 常规召回哪里不足 → 工具式阅读如何解决 → 服务端怎么拦住越界证据 → 成本和评测如何比较。产品全景控制在一句话。</p></div><div><h4>继续追问</h4><p>追问：效果一定优于向量检索吗？</p><p>答：没有通用保证。跨文档条件组合更值得尝试；简单高频问法可能向量混合检索更经济，需要在同一测试集比较质量、延迟和成本。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把代码中的评分器当作已经取得显著提升的实验报告。</p></div>
+    <div class="refs"><a href="#source-C6" data-source="C6" class="ref">C6 · 只接受已展示且版本一致的证据</a><a href="#source-C7" data-source="C7" class="ref">C7 · 选区不能越过已读范围</a><a href="#source-C9" data-source="C9" class="ref">C9 · 基于原文包含关系的 L1 检索评分</a><a href="#source-C10" data-source="C10" class="ref">C10 · 配对 Bootstrap 区间</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q04"> 我已能脱稿回答</label><button class="small" data-copy="Q04">复制口述稿</button></div>
+    <label class="note-label" for="note-Q04">我的补充 / 真实案例</label><textarea id="note-Q04" data-note="Q04" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q05" data-group="overview" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q05</span><span class="qheading">你简历中有哪些成果现在能拿证据说明？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会分三类说明。第一类是当前源码可以直接展示的功能，例如 RRF 融合、证据校验、PPT 文字重建和 FPL 的回执重放。第二类是要运行环境才能确认的效果，比如实时语音体验、导出视觉还原度和容量。第三类是简历中的历史数字，包括 92.4% 一致性、97.9% 验证准确率、89.6% 字段命中率和两分钟以内的生成时间，需要对应的样本、定义与实验记录。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>建议面试前准备：一段可复现演示、一个失败案例、一个确定性测试、一个包含分母与版本的评测表。指定目录未找到完整历史指标报告，不能代填样本量。</p></div><div><h4>继续追问</h4><p>追问：现在就能证明这些百分比吗？</p><p>答：这份源码核对无法证明历史百分比。我可以解释方法与已保存实现；需要原始报告的数字，我会补齐报告后再做强结论。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>8.4% 是相对提升还是百分点当前不清楚；70.3%→89.6% 是提升 19.3 个百分点。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a><a href="#source-C4" data-source="C4" class="ref">C4 · RRF 的实际公式</a><a href="#source-P5" data-source="P5" class="ref">P5 · 识别失败回退图片</a><a href="#source-F5" data-source="F5" class="ref">F5 · 回执重放与请求指纹</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q05"> 我已能脱稿回答</label><button class="small" data-copy="Q05">复制口述稿</button></div>
+    <label class="note-label" for="note-Q05">我的补充 / 真实案例</label><textarea id="note-Q05" data-note="Q05" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-fpl" data-section="fpl"><div class="section-title"><span class="section-num">02</span><div><h2>Future Props Lab</h2><p>应用状态、Agent 接口与执行边界</p></div><span class="count">9 题</span></div><div class="flow" aria-label="项目主线"><span>项目快照</span><span>Agent 业务操作</span><span>版本与归属校验</span><span>提交与回执</span></div><article class="question" id="Q06" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q06</span><span class="qheading">FPL 解决什么问题？与直接用聊天工具创作有什么区别？<span class="qmeta"><span class="badge ok">简历＋源码</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>FPL 是我的个人创作工作台，把视觉创作、演示文稿、笔记、视频、3D 和 Galgame 等工作组织成项目、素材与编辑状态。我的重点不是再提供一个聊天框，而是让外部 Agent 可以读取当前项目、操作具体对象并导出结果。用户手动编辑和 Agent 修改针对同一份应用数据，应用保留版本、权限与领域校验。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>例子：Agent 修改 PPT 的某个元素时，传递实体 ID、操作和 expected_revision；服务端检查锁定状态、连接引用和版本后才提交。可解释的对象操作比整份文件反复覆盖更容易控制。</p></div><div><h4>继续追问</h4><p>追问：为什么需要多个工坊？</p><p>答：内容对象和编辑方式不同，但它们共享素材、账号和操作入口；我复用通用机制，同时保留各工坊的数据约束。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>当前功能面不等于每个工坊都已达到相同成熟度；没有商业用户或增长证据就不声称已有规模化验证。</p></div>
+    <div class="refs"><a href="#source-F6" data-source="F6" class="ref">F6 · 先查回执，再检查版本</a><a href="#source-F7" data-source="F7" class="ref">F7 · 数据库 CAS 条件</a><a href="#source-F14" data-source="F14" class="ref">F14 · 编辑操作保留领域约束</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q06"> 我已能脱稿回答</label><button class="small" data-copy="Q06">复制口述稿</button></div>
+    <label class="note-label" for="note-Q06">我的补充 / 真实案例</label><textarea id="note-Q06" data-note="Q06" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q07" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q07</span><span class="qheading">为什么做 CLI、SDK 和 Skill 三层？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>CLI 让 Agent 在命令行发现和调用能力，Python SDK 方便脚本与程序组合，Skill 提供任务步骤和领域用法。三层围绕同一业务接口，避免不同 Agent 各自实现一套编辑逻辑。当前 CLI 会先检查服务器暴露的 operations，再定位 SDK 方法；服务端与 SDK 不兼容时会显式报错，而不是猜接口。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>Skill 是使用约定，不是权限系统。请求最终还要经过接口鉴权、输入校验和业务规则。SDK 把资源方法、错误和流式响应包装起来；CLI 的 wait 只允许 GET，防止把轮询变成重复写操作。</p></div><div><h4>继续追问</h4><p>追问：为什么不让 Agent 直接改数据库？</p><p>答：会绕过归属、版本和编辑约束，也破坏应用与素材引用的一致性；正式业务接口是稳定边界。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把“提供 SDK”说成模型能理解或正确执行所有任务的保证。</p></div>
+    <div class="refs"><a href="#source-F2" data-source="F2" class="ref">F2 · 操作发现与版本不兼容处理</a><a href="#source-F3" data-source="F3" class="ref">F3 · 轮询仅允许 GET</a><a href="#source-F4" data-source="F4" class="ref">F4 · SDK 对 409 的显式处理</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q07"> 我已能脱稿回答</label><button class="small" data-copy="Q07">复制口述稿</button></div>
+    <label class="note-label" for="note-Q07">我的补充 / 真实案例</label><textarea id="note-Q07" data-note="Q07" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q08" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q08</span><span class="qheading">多个 Agent 如何接入？你自己做了 Agent 模型吗？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我主要做应用与外部 Agent 的连接和操作协议。源码中有 Codex、Claude Code、OpenCode 等连接定义，包含可执行文件和版本探测约定。应用层把业务能力开放出来，连接层处理各 CLI 的运行差异。模型推理和 Agent 本身由外部实现提供，我负责将它们接入项目上下文和受约束的业务操作。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>需要区分两条链：外部 Agent 通过 FPL API/SDK 操作应用；FPL 在主机执行端管理 Agent CLI。统一的是应用操作，CLI 的登录、输出协议和模型目录仍需要适配。</p></div><div><h4>继续追问</h4><p>追问：统一接口后能无缝切换吗？</p><p>答：能复用业务能力，但不同 Agent 的工具能力、输出格式和执行限制不同，需要探测与适配，不能承诺所有能力完全等价。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>最低 CLI 版本是当前源码的兼容策略，不应背成外部工具长期不变的事实。</p></div>
+    <div class="refs"><a href="#source-F1" data-source="F1" class="ref">F1 · Agent 连接定义</a><a href="#source-F2" data-source="F2" class="ref">F2 · 操作发现与版本不兼容处理</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q08"> 我已能脱稿回答</label><button class="small" data-copy="Q08">复制口述稿</button></div>
+    <label class="note-label" for="note-Q08">我的补充 / 真实案例</label><textarea id="note-Q08" data-note="Q08" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q09" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q09</span><span class="qheading">用户和 Agent 同时修改项目，怎么避免互相覆盖？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>读取项目时拿到 revision，写入携带 expected_revision。服务端不仅在 Python 层判断，还在 UPDATE 的 WHERE 条件里匹配版本；影响行数不为 1 就返回冲突和当前快照。这样即使两个请求都读到旧版本，也只有一个能提交。客户端拿到冲突后重新读取、展示差异或重新生成，不直接覆盖。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>revision 解决“基于哪个快照修改”，request_id 解决“是不是同一次请求”，两者不能替代。批量操作还要先构造候选结果、验证领域约束，再作为一个事务提交。</p></div><div><h4>继续追问</h4><p>追问：能自动合并吗？</p><p>答：不同对象的独立修改可以设计合并策略，但依赖关系和整份画布更新不能盲目合并。当前回答以源码中的 CAS 冲突为准。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>CAS 不是 CRDT，也不意味着实时协作编辑已实现。</p></div>
+    <div class="refs"><a href="#source-F6" data-source="F6" class="ref">F6 · 先查回执，再检查版本</a><a href="#source-F7" data-source="F7" class="ref">F7 · 数据库 CAS 条件</a><a href="#source-F13" data-source="F13" class="ref">F13 · 批量编辑的测试用例</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q09"> 我已能脱稿回答</label><button class="small" data-copy="Q09">复制口述稿</button></div>
+    <label class="note-label" for="note-Q09">我的补充 / 真实案例</label><textarea id="note-Q09" data-note="Q09" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q10" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q10</span><span class="qheading">网络超时后重试，为什么不会重复修改？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>写操作使用 request_id，并把规范化请求的指纹与结果保存成回执。同一个资源和账号下，如果 request_id 与指纹都一致，就返回原结果；如果同一个 ID 换了内容，就返回幂等冲突。回执与业务修改必须处于同一事务，才能处理“提交成功但响应丢失”。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>源码先查询回执，再校验 expected_revision，所以成功请求即使携带旧版本重试，也能回放原结果。数据库 CAS 冲突后还会再查回执，处理并发重试。</p></div><div><h4>继续追问</h4><p>追问：这是 exactly-once 吗？</p><p>答：对有回执保护的本地业务修改提供幂等效果；外部模型调用或第三方副作用还需要自身的幂等与对账，不能据此声称全链路 exactly-once。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>回执查找范围包含账号、资源类型、资源 ID 和请求 ID；不是全局只记一个字符串。</p></div>
+    <div class="refs"><a href="#source-F5" data-source="F5" class="ref">F5 · 回执重放与请求指纹</a><a href="#source-F6" data-source="F6" class="ref">F6 · 先查回执，再检查版本</a><a href="#source-F13" data-source="F13" class="ref">F13 · 批量编辑的测试用例</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q10"> 我已能脱稿回答</label><button class="small" data-copy="Q10">复制口述稿</button></div>
+    <label class="note-label" for="note-Q10">我的补充 / 真实案例</label><textarea id="note-Q10" data-note="Q10" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q11" data-group="fpl" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q11</span><span class="qheading">Agent 执行到一半进程退出，怎么恢复？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我区分可安全重试的操作和结果不明确的外部执行。当前 native queue 有任务、worker、lease_id、过期时间和回执；领取任务用状态与 revision 做 CAS，提交结果也要匹配 worker 与 lease。对已经领取但租约过期的任务，当前实现会标为 unknown，并明确不自动重派，避免未知副作用被重复执行。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>恢复首先是恢复真实状态，不是保证继续执行。原 worker 后续返回时，仍可按原租约提交受约束的结果；业务层再决定核对、取消或新建尝试。其他工坊任务策略需要分别检查，不能一概而论。</p></div><div><h4>继续追问</h4><p>追问：为什么不一超时就重试？</p><p>答：超时可能只是回包丢了，外部任务已经完成。直接重试可能重复生成、重复计费或重复发布。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>native queue 的 unknown 策略不要讲成所有任务都自动断点续跑。</p></div>
+    <div class="refs"><a href="#source-F8" data-source="F8" class="ref">F8 · 租约过期转 unknown，不自动重派</a><a href="#source-F9" data-source="F9" class="ref">F9 · 执行回执受 worker 与 lease 约束</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q11"> 我已能脱稿回答</label><button class="small" data-copy="Q11">复制口述稿</button></div>
+    <label class="note-label" for="note-Q11">我的补充 / 真实案例</label><textarea id="note-Q11" data-note="Q11" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q12" data-group="fpl" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q12</span><span class="qheading">审批后能否直接执行？中途画布改变怎么办？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>审批必须对应具体操作、计划和资源版本，而不是一个长期通行证。源码把审批等待与业务授权分开，等待器是进程内的，重启不会把旧请求当成已批准。视觉生成发布还会核对项目、计划哈希、当前身份，以及已绑定的输出内容摘要；内容变了不能沿用旧授权。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>画布在等待期间变化，要重新核验版本，必要时重新准备方案。当前代码的业务授权由所属应用持久化；ApprovalBroker 只负责唤醒等待者，不能把内存 Future 当成持久审批记录。</p></div><div><h4>继续追问</h4><p>追问：超时或关闭能默认同意吗？</p><p>答：不能，超时、取消、关闭都不能产生批准结果；要重新走有效授权流程。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>这是当前实现的安全边界；不要说所有审批等待都能跨重启恢复。</p></div>
+    <div class="refs"><a href="#source-F10" data-source="F10" class="ref">F10 · 审批等待器的进程边界</a><a href="#source-F11" data-source="F11" class="ref">F11 · 发布审批绑定具体计划</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q12"> 我已能脱稿回答</label><button class="small" data-copy="Q12">复制口述稿</button></div>
+    <label class="note-label" for="note-Q12">我的补充 / 真实案例</label><textarea id="note-Q12" data-note="Q12" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q13" data-group="fpl" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q13</span><span class="qheading">项目删掉素材时，如何避免误删另一个工坊还在用的文件？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>素材引用需要由拥有业务状态的应用说明，不能只看某个页面是否还显示它。当前实现有准备引用变更的意图与 pin：先保留这次修改可能使用的素材，源应用把业务修改与回执提交后，再确认引用结果。未知结果不会按时间随意释放 pin，避免源事务其实成功但文件已经被清理。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>这是跨服务和文件存储的一致性取舍：数据库提交与文件删除无法靠一个普通事务原子完成，需要可恢复的状态与确认。代价是未知意图可能长期保留，要有核对与治理流程。</p></div><div><h4>继续追问</h4><p>追问：是不是分布式两阶段提交？</p><p>答：更准确说是应用层准备意图和结果核对；不能不加限定地称为支持通用 XA/2PC。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>读取到的是当前引用机制，不能据此保证所有历史素材都已完成无误迁移。</p></div>
+    <div class="refs"><a href="#source-F12" data-source="F12" class="ref">F12 · 引用准备意图与未知结果保留</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q13"> 我已能脱稿回答</label><button class="small" data-copy="Q13">复制口述稿</button></div>
+    <label class="note-label" for="note-Q13">我的补充 / 真实案例</label><textarea id="note-Q13" data-note="Q13" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q14" data-group="fpl" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q14</span><span class="qheading">你怎么验证这些 Agent 操作可靠？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会验证业务不变量，而不是只检查接口返回 200。例如同一请求重放结果相同、换内容复用请求 ID 返回冲突、旧版本写入失败、批次后半段出错时前半段不落库、删除节点不破坏下游引用。仓库中已有多工坊批量操作测试，可以用其中一个把输入、响应和持久状态讲完整。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>测试分层：纯规则测变换，服务测试测事务与归属，接口测试测协议与错误，真实模型测试测效果。静态阅读能确认测试用例存在；本次整理没有启动四个项目或运行其完整套件。</p></div><div><h4>继续追问</h4><p>追问：有哪些仍然可能漏？</p><p>答：真实 CLI 版本差异、进程崩溃时序、外部服务副作用和端到端视觉结果，都需要专项或真实服务验证。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把“仓库有测试”说成“本次已全量通过”。</p></div>
+    <div class="refs"><a href="#source-F13" data-source="F13" class="ref">F13 · 批量编辑的测试用例</a><a href="#source-F14" data-source="F14" class="ref">F14 · 编辑操作保留领域约束</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q14"> 我已能脱稿回答</label><button class="small" data-copy="Q14">复制口述稿</button></div>
+    <label class="note-label" for="note-Q14">我的补充 / 真实案例</label><textarea id="note-Q14" data-note="Q14" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-cs" data-section="cs"><div class="section-title"><span class="section-num">03</span><div><h2>AI 客服中台</h2><p>检索证据、运行一致性与交接</p></div><span class="count">12 题</span></div><div class="flow" aria-label="项目主线"><span>发布配置</span><span>检索 / 工具</span><span>证据与状态校验</span><span>回复 / 人工交接</span></div><article class="question" id="Q15" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q15</span><span class="qheading">客服中台的完整链路是什么？为什么称为 AI Native？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>产品分建设与运行两部分。建设时，用户用自然语言描述客服需求，由 AI 协助准备人设、边界、知识和工具配置，结果进入可编辑草稿，试用后再发布。运行时读取发布配置与会话上下文，按需检索知识、调用工具或工作流，最后保存回答、证据和执行记录。AI Native 体现在配置和迭代方式由自然语言驱动，同时仍保留应用的版本和校验边界。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>讲清草稿与发布快照的区别：编辑不应直接改变已运行服务。发布前会验证配置、工作流和能力引用；渠道身份、会话及发布版本也要关联，避免服务过程中悄悄换配置。</p></div><div><h4>继续追问</h4><p>追问：它就是普通 RAG 加管理后台吗？</p><p>答：RAG 是一部分，另有工具与工作流、语音、人工交接，以及基于历史会话的可审阅配置优化。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>自然语言生成配置不等于自动发布；从源码到线上容量和商业效果仍需运行证据。</p></div>
+    <div class="refs"><a href="#source-C1" data-source="C1" class="ref">C1 · 草稿发布与运行快照</a><a href="#source-C11" data-source="C11" class="ref">C11 · 先提交用户消息，再等待外部工作</a><a href="#source-C12" data-source="C12" class="ref">C12 · 优化字段和证据引用白名单</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q15"> 我已能脱稿回答</label><button class="small" data-copy="Q15">复制口述稿</button></div>
+    <label class="note-label" for="note-Q15">我的补充 / 真实案例</label><textarea id="note-Q15" data-note="Q15" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q16" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q16</span><span class="qheading">为什么支持多种分块？怎么选？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>分块不是统一越小越好。固定窗口适合缺少结构的文本；递归切分优先沿自然边界；标题层级适合制度和产品说明，需要带上祖先标题；整篇单块适合短文档；Q&amp;A 分块把问题和回答组织成检索单位。选择时关注问题所需证据是否完整、噪声量、索引规模和返回上下文长度。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>例如子标题“办理条件”必须带上“企业版／退款规则”等祖先信息，否则孤立片段容易被错误归因。重叠能缓解边界断裂，但增加重复召回和存储，不替代结构理解。</p></div><div><h4>继续追问</h4><p>追问：怎么确定 chunk 大小？</p><p>答：先按文档结构设候选配置，再用真实问法比较证据召回、精度、延迟和成本；没有对所有知识库都最优的固定值。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>naive parser 中的 fixed、recursive、structure、one 与独立 QA parser 要区分；近似 token 估计不要说成精确 tokenizer 统计。</p></div>
+    <div class="refs"><a href="#source-C2" data-source="C2" class="ref">C2 · 分块策略分派</a><a href="#source-C3" data-source="C3" class="ref">C3 · 祖先标题上下文</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q16"> 我已能脱稿回答</label><button class="small" data-copy="Q16">复制口述稿</button></div>
+    <label class="note-label" for="note-Q16">我的补充 / 真实案例</label><textarea id="note-Q16" data-note="Q16" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q17" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q17</span><span class="qheading">RRF 适合什么场景？为什么融合向量检索与 BM25？怎么算？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>RRF 适合把多路互补的检索排名合成一个候选列表，尤其是它们的原始分数难以直接比较时。在我的客服项目中，同一次提问既可能有口语化描述，也可能包含错误码、产品型号或字段名：向量检索找语义接近的说明，BM25 补充词面命中的文档，再用 RRF 合并。它按每个候选的名次累加 1/(k+rank)，不把两路原始分数直接相加，也不要求候选同时被两路命中。这样可以综合不同检索信号，之后再选证、重排或生成回答；是否优于单路仍需评测。</p></div>
+    <section class="applications"><h4>可以应用在哪里？</h4><p class="scenario-intro">先判断：是否有两路以上互补、相对可靠的排名，需要合成统一候选顺序？下面把场景和项目实现范围分开说明。</p><div class="scenario-grid"><div class="scenario-card"><h5>客服故障排查：错误码＋自然语言</h5><p>示例：“升级后报 E102，一直进不了工作台”。BM25 利用 E102、产品名等词面信号，向量检索补充“登录失败／鉴权异常”等语义相关资料。RRF 将两路候选合成一份排名，适合这类精确词与语义描述混合的问题。</p><small>项目已有的融合方式；业务问题为示例</small></div><div class="scenario-card"><h5>企业知识库：口语问法＋规范术语</h5><p>示例：“退的钱怎么还没回来？”对应制度中的“退款原路退回到账时效”。语义检索帮助跨越措辞差异，关键词检索保留“退款、到账”等信号。在同时含口语、政策术语和专有名词的语料中，可用 RRF 作为混合召回基线，再检查证据覆盖与噪声。</p><small>项目已有的融合方式；不保证一定优于单路</small></div><div class="scenario-card"><h5>多查询或多检索器：合并不同排名</h5><p>同一需求可用“退款到账时间”“原路退回处理周期”等互补查询检索，也可组合标题检索、正文检索与不同模型的排名。只要能映射到同一候选对象，就可用 RRF 合并；无关或重复的路线可能反而损害质量。</p><small>通用扩展场景；未确认本项目当前入口已实现</small></div></div><p class="scenario-intro">在客服链路中的位置：用户问题 → 向量召回 ＋ BM25 召回 → RRF 融合 → 候选片段 → 证据选择／可选重排 → 回答。RRF 负责候选排序，不能替代权限过滤、硬约束与事实核验。</p></section><div class="deeper"><div><h4>展开解释</h4><p>例如 A 在向量列表排第 1、在 BM25 列表排第 3，k=60 时得分为 1/61+1/63≈0.03227；B 只在 BM25 排第 1，得分约 0.01639。A 因获得两路较靠前的排名而超过 B，但这只是排名信号的合成，不代表 A 必然更符合业务要求。</p><p>k 是平滑常数，不是召回条数；每路返回多少候选是另一个参数。k 越大，靠前几个名次的贡献差距越小。项目默认路径用 k=60，应结合候选深度一起评测。</p><p>接入前要统一候选身份与粒度，例如都按同一个 chunk_id 融合；同一片段的不同 ID 不会自动合并，整篇文档和片段也不能不加处理地混排。RRF 本身无需额外模型推理，但多路召回和后续重排仍有成本。</p></div><div><h4>继续追问</h4><p>追问：什么时候不用，或者不能只靠 RRF？</p><p>答：只有一个有效结果列表时没有融合价值；查询订单号或用户 ID 应走精确查询；产品版本、租户权限、时效等硬约束应由过滤与校验保证。RRF 不能保证含指定错误码的结果一定排第一。</p><p>追问：RRF、加权融合、reranker 怎么选？</p><p>答：原始分数难对齐、缺少融合训练数据时，可先评估 RRF；分数可校准且需要控制各路贡献时评估加权融合；需要更精细的 query-document 相关性判断时，可在融合后增加 reranker。三者是否组合，要看质量、延迟与成本。</p><p>追问：它是不是只取交集，或者一定提升效果？</p><p>答：都不是。单路命中仍有贡献；弱检索器、重复的查询改写或高度相关的多路结果可能带来噪声或重复计票。所有路线都漏掉的证据，融合也找不回来。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>下面的业务提问都是教学示例，不是已核实的真实用户案例。源码直接支持的是向量＋BM25 融合；多查询改写、多模型或多搜索源融合是通用扩展场景，本次未确认已接入当前 RRF 入口。BM25 词面匹配也不等于数据库精确查询。</p></div>
+    <div class="refs"><a href="#source-C4" data-source="C4" class="ref">C4 · RRF 的实际公式</a><a href="#source-W2" data-source="W2" class="ref">W2 · RRF 的多路融合场景与参数（官方文档）</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q17"> 我已能脱稿回答</label><button class="small" data-copy="Q17">复制口述稿</button></div>
+    <label class="note-label" for="note-Q17">我的补充 / 真实案例</label><textarea id="note-Q17" data-note="Q17" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q18" data-group="cs" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q18</span><span class="qheading">RRF 和加权融合怎么选？当前加权实现有什么限制？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>RRF 只依赖排名，适合作为容易理解的融合基线；加权融合能调两路相对贡献，但要求清楚分数如何归一。当前代码把 BM25 除以候选中的最大分，向量相似度按 1-distance 计算，再按权重组合。它还保留 BM25 命中的候选，即使其向量分不高，适应精确标识查询。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>两个限制要说明：1-distance 是否可解释为所需相似度，取决于向量库距离配置；仅由 BM25 召回、未进向量候选的条目，当前向量项按 0 处理，不是给并集全部重新计算精确向量相似度。</p></div><div><h4>继续追问</h4><p>追问：怎么改进？</p><p>答：候选统一后批量补算相关分，或增加独立重排；用同一数据集对比收益和开销，再决定是否值得。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把当前实现描述成两路分数都严格归一到概率，或对并集进行了完整交叉编码。</p></div>
+    <div class="refs"><a href="#source-C5" data-source="C5" class="ref">C5 · 加权融合与 BM25 归一</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q18"> 我已能脱稿回答</label><button class="small" data-copy="Q18">复制口述稿</button></div>
+    <label class="note-label" for="note-Q18">我的补充 / 真实案例</label><textarea id="note-Q18" data-note="Q18" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q19" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q19</span><span class="qheading">什么是渐进式生成式检索？与向量 RAG 有什么区别？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>它让 Agent 分步定位和阅读资料，再提交原文证据。模型可以先看目录、搜索片段，再按需看大纲、精读或扩展范围；最终返回的是选中的原文，不是模型自己编写的总结。与预先分块、向量召回相比，它可以围绕问题动态组织阅读路径，更适合跨文档或多条件问题，但通常要付出更多轮次、延迟和模型成本。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>系统不需要依赖预先分块或向量化才能完成这条检索路线，但仍然需要文档目录、搜索和正文读取等基础能力。它并不是完全没有索引和预处理，更不是无预算地浏览全文。</p></div><div><h4>继续追问</h4><p>追问：为什么不直接把全部文档塞进上下文？</p><p>答：资料量大时成本和干扰都高，也难追踪哪些内容被有效看到；渐进阅读让过程与最终证据更可检查。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>“生成式”指检索决策和选证过程，最终证据仍来自已读原文。</p></div>
+    <div class="refs"><a href="#source-C6" data-source="C6" class="ref">C6 · 只接受已展示且版本一致的证据</a><a href="#source-C8" data-source="C8" class="ref">C8 · 探索轮数与收口模型</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q19"> 我已能脱稿回答</label><button class="small" data-copy="Q19">复制口述稿</button></div>
+    <label class="note-label" for="note-Q19">我的补充 / 真实案例</label><textarea id="note-Q19" data-note="Q19" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q20" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q20</span><span class="qheading">怎么防止检索 Agent 编造证据，或者引用没看过的内容？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>服务端维护本轮可见的 evidence。提交时必须提供工具返回的 evidence_id，且 observed_by_model 为真；再检查文档仍存在、正文 SHA-256 未变化，以及选区是否落在已展示范围内。最终文本由服务端按位置从正文切出，而不是信任模型提交的一段所谓原文。只有标题或格式标记的范围也会被拒绝。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>例如模型读到第 20～30 行，不能直接选 10～50 行；相邻扩展需要先生成新的可见 evidence，再重新提交。这样约束来源、版本和可见范围，防止凭一个文档 ID 引用整个未读文件。</p></div><div><h4>继续追问</h4><p>追问：这就保证回答一定正确了吗？</p><p>答：只保证证据来源和范围可核验；证据是否充分、推理是否正确、回答是否遗漏仍需单独评测。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>来源可信、证据相关、结论正确是三个层次；不要混为一个“无幻觉保证”。</p></div>
+    <div class="refs"><a href="#source-C6" data-source="C6" class="ref">C6 · 只接受已展示且版本一致的证据</a><a href="#source-C7" data-source="C7" class="ref">C7 · 选区不能越过已读范围</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q20"> 我已能脱稿回答</label><button class="small" data-copy="Q20">复制口述稿</button></div>
+    <label class="note-label" for="note-Q20">我的补充 / 真实案例</label><textarea id="note-Q20" data-note="Q20" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q21" data-group="cs" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q21</span><span class="qheading">Agent 一直找资料不结束，怎么办？找不到该不该强行给结果？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>探索轮数、模型输出和阅读量都应有预算。当前运行入口给 harness 设置探索轮数与收口模型，最终只能从已有可见证据中选取；没有合适证据可以返回空结果。结束但未成功提交证据时，系统会记录未完成或校验失败事件，不把一次看似完整的自然语言输出当成成功检索。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>业务上要区分“没有相关资料”和“检索过程失败”。二者都可能没有命中，但错误反馈、重试和评测口径不同。预算耗尽后不能绕过证据约束补造来源。</p></div><div><h4>继续追问</h4><p>追问：预算怎么定？</p><p>答：按任务难度和延迟目标做配置，用轮数、读取量、调用成本与成功率曲线找合理范围；当前整理没有可引用的最佳预算实验。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>返回空结果不是证明知识库绝对没有答案，只是本次检索没有可用证据。</p></div>
+    <div class="refs"><a href="#source-C8" data-source="C8" class="ref">C8 · 探索轮数与收口模型</a><a href="#source-C6" data-source="C6" class="ref">C6 · 只接受已展示且版本一致的证据</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q21"> 我已能脱稿回答</label><button class="small" data-copy="Q21">复制口述稿</button></div>
+    <label class="note-label" for="note-Q21">我的补充 / 真实案例</label><textarea id="note-Q21" data-note="Q21" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q22" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q22</span><span class="qheading">你怎么比较生成式检索与向量检索？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先只测检索层，避免把回答模型差异混进来。对同一批问题标注可回答性和 gold 原文，分别跑两种路线，比较 evidence recall、precision、全部证据命中率，以及不可答问题是否返回空结果，再看 P50/P95 延迟。代码里还提供按 case 配对的 Bootstrap 差值区间，用来观察提升是否稳定。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>当前评分器用归一文本的包含关系匹配 gold quote：召回是命中的 gold 比例，精度是包含任一 gold 的 hit 比例。它可复现，但会漏掉等价改写，也受标注粒度和长片段影响；不能当成人工语义判断的完全替代。</p></div><div><h4>继续追问</h4><p>追问：为什么配对 Bootstrap？</p><p>答：让两种策略在同一问题上的差值参与重采样，减少题目难度不同造成的干扰；区间跨零就谨慎解释。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>这是评测实现与建议口径；本次未执行真实模型评测，不能填胜率或显著性结论。</p></div>
+    <div class="refs"><a href="#source-C9" data-source="C9" class="ref">C9 · 基于原文包含关系的 L1 检索评分</a><a href="#source-C10" data-source="C10" class="ref">C10 · 配对 Bootstrap 区间</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q22"> 我已能脱稿回答</label><button class="small" data-copy="Q22">复制口述稿</button></div>
+    <label class="note-label" for="note-Q22">我的补充 / 真实案例</label><textarea id="note-Q22" data-note="Q22" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q23" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q23</span><span class="qheading">客服回复过程中为什么不能一直开着数据库写事务？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>模型、工具和网络耗时长，如果在等待期间持有写事务，会增加锁占用和连接压力。我把回合拆成持久检查点：先提交用户消息，关闭读取快照，再进行外部调用；结果准备好后，用短事务一起保存助手消息、工作流变更、工具交换记录和分析事件。这样既保留用户输入，又让结果的相关业务记录一致落库。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>当前 coordinator 明确标注进程内回合边界，使用会话锁串行化；持久一致性还依赖数据库约束和其他状态校验。数据库事务只能约束本库记录，不能撤回已发生的第三方副作用。</p></div><div><h4>继续追问</h4><p>追问：提交前进程崩溃怎么办？</p><p>答：用户消息已经保存，助手结果可能未完成，恢复时要依据已提交状态核对；有副作用的工具不能盲目重放。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把 commit_result 的本地原子提交说成外部工具执行也在 PostgreSQL 事务中。</p></div>
+    <div class="refs"><a href="#source-C11" data-source="C11" class="ref">C11 · 先提交用户消息，再等待外部工作</a><a href="#source-C15" data-source="C15" class="ref">C15 · 当前单后端实例约束</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q23"> 我已能脱稿回答</label><button class="small" data-copy="Q23">复制口述稿</button></div>
+    <label class="note-label" for="note-Q23">我的补充 / 真实案例</label><textarea id="note-Q23" data-note="Q23" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q24" data-group="cs" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q24</span><span class="qheading">PostgreSQL 与 Chroma 怎么保持一致？能直接双写吗？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我把 PostgreSQL 作为业务和协调状态的真源，Chroma 是可重建的检索投影。片段变更后记录目标状态、chunk_revision、generation 和待执行状态，由 worker 处理外部索引。worker 领取与结算要核对 lease 和 generation，旧任务不能把新版本的状态覆盖。失败则保留记录重试或对账。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>这提供可恢复的最终一致性，不是两个数据库的原子事务。删除也需要“应当不存在”的持久目标，而不是只在内存里发一次删除请求；索引显示成功与真实召回正确也要分别验证。</p></div><div><h4>继续追问</h4><p>追问：旧向量可能短时存在吗？</p><p>答：跨存储更新可能有窗口，所以检索入口还要结合当前有效成员和版本过滤，并持续核对投影；不能只信向量库里存在某个 ID。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>代际和租约能拦住陈旧结算，不等于所有外部写入天然具备线性一致性。</p></div>
+    <div class="refs"><a href="#source-C14" data-source="C14" class="ref">C14 · 索引投影代际与重试状态</a><a href="#source-C4" data-source="C4" class="ref">C4 · RRF 的实际公式</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q24"> 我已能脱稿回答</label><button class="small" data-copy="Q24">复制口述稿</button></div>
+    <label class="note-label" for="note-Q24">我的补充 / 真实案例</label><textarea id="note-Q24" data-note="Q24" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q25" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q25</span><span class="qheading">历史会话驱动优化，会不会让 AI 把配置改坏？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>优化结果先是建议，不直接替换线上服务。用户选择会话与允许优化的字段，模型返回变更、理由和消息证据；服务端校验字段白名单、重复路径和证据消息归属，再组装合法配置。采纳时还要核对运行版本和草稿 revision。用户可以逐项编辑、采纳并复测，之后再发布。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>源码还约束部分已有规则不能被优化删除，例如已有禁答项、转人工触发项和 FAQ 身份。它限制自动改写的破坏范围，但不能判断建议的业务正确性，所以差异审阅仍有必要。</p></div><div><h4>继续追问</h4><p>追问：为什么不自动闭环发布？</p><p>答：一次会话可能有噪声或特殊诉求，不能直接变成普遍政策；先让证据、差异和采纳决定可见，再评估自动化范围。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>有消息引用只能说明建议可追溯，不能保证建议一定合理。</p></div>
+    <div class="refs"><a href="#source-C12" data-source="C12" class="ref">C12 · 优化字段和证据引用白名单</a><a href="#source-C13" data-source="C13" class="ref">C13 · 应用优化时的版本检查</a><a href="#source-C1" data-source="C1" class="ref">C1 · 草稿发布与运行快照</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q25"> 我已能脱稿回答</label><button class="small" data-copy="Q25">复制口述稿</button></div>
+    <label class="note-label" for="note-Q25">我的补充 / 真实案例</label><textarea id="note-Q25" data-note="Q25" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q26" data-group="cs" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q26</span><span class="qheading">语音插话、误打断恢复、转人工分别怎么处理？当前能多实例吗？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>语音要把“立刻停播”和“最终确认打断”分开。前端可以先暂停，服务端按 turn_id 确认、结算被打断回合并取消活动工具；可疑误打断保留恢复状态。转人工则是另一条业务状态：有效人工交接期间，AI 回合被阻止并保存内部标记，避免抢答。部署上当前代码明确限制单后端实例，不把进程内锁当成跨实例协调。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>面试时可拆成两题展开：语音关注生成、播放和用户说话是不同时间轴；人工交接关注接单状态与上下文；扩容需处理共享文件、worker 广播、SSE/取消协调、向量服务与连接预算。</p></div><div><h4>继续追问</h4><p>追问：产品目标至少 100 用户，是否已经验证 100 并发？</p><p>答：用户规模目标不等于同时活跃会话，更不等于压测结果。当前不能从静态源码给出这个保证。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>单后端实例是当前实现约束；多实例与峰值容量要作为后续验证或改造目标。</p></div>
+    <div class="refs"><a href="#source-C16" data-source="C16" class="ref">C16 · 服务端打断确认与回合结算</a><a href="#source-C17" data-source="C17" class="ref">C17 · 可疑打断的前端恢复状态</a><a href="#source-C18" data-source="C18" class="ref">C18 · 转人工期间阻止 AI 抢答的持久标记</a><a href="#source-C15" data-source="C15" class="ref">C15 · 当前单后端实例约束</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q26"> 我已能脱稿回答</label><button class="small" data-copy="Q26">复制口述稿</button></div>
+    <label class="note-label" for="note-Q26">我的补充 / 真实案例</label><textarea id="note-Q26" data-note="Q26" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-ppt" data-section="ppt"><div class="section-title"><span class="section-num">04</span><div><h2>PPT Agent</h2><p>三条路线、结构匹配与可编辑重建</p></div><span class="count">10 题</span></div><div class="flow" aria-label="项目主线"><span>内容规划</span><span>版式 / 视觉生成</span><span>文字与背景分离</span><span>分层 PPTX</span></div><article class="question" id="Q27" data-group="ppt" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q27</span><span class="qheading">为什么做三条 PPT 生成路线？不是直接生图最好看吗？<span class="qmeta"><span class="badge gap">部分支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>三条路线对应不同交付约束。PPT 语义 JSON 模板复用原生对象和既有风格，适合重复汇报和频繁改稿；HTML 模板便于用代码扩充版式并在浏览器检查，但原生 PPTX 还需转换；整页生图能获得更自由的视觉表达，再重建为文字与图片，但复杂图表通常仍是图片。选择取决于模板供给、视觉要求和后续编辑方式。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>我会同时比较内容正确性、视觉一致性、编辑粒度、生成时间和失败恢复。不能只用一张最好看的截图决定路线；最终交付必须实际打开，确认对象、字体、顺序和版式。</p></div><div><h4>继续追问</h4><p>追问：默认选哪条？</p><p>答：固定品牌和高频改稿优先原生模板；模板供给不足可考虑 HTML；定制视觉和图文叙事更适合生图重建，但要接受编辑边界。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>本次对生图重建、HTML 和结构匹配找到直接实现；语义 JSON 原生模板的完整历史入口尚未定位，方案描述以简历为依据。</p></div>
+    <div class="refs"><a href="#source-P1" data-source="P1" class="ref">P1 · 重建单页入口</a><a href="#source-P11" data-source="P11" class="ref">P11 · HTML 模板生成入口</a><a href="#source-P16" data-source="P16" class="ref">P16 · 重建对象的结构化 schema</a><a href="#source-R1" data-source="R1" class="ref">R1 · 当前简历：定位与经历</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q27"> 我已能脱稿回答</label><button class="small" data-copy="Q27">复制口述稿</button></div>
+    <label class="note-label" for="note-Q27">我的补充 / 真实案例</label><textarea id="note-Q27" data-note="Q27" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q28" data-group="ppt" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q28</span><span class="qheading">原生 PPT 语义 JSON 模板是什么？如何保留可编辑性？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>按简历，这条路线把已有 PPTX 的元素标识、坐标、样式和层级抽取出来，再结合页面视觉补充标题、正文、配图等内容角色，形成语义模板。生成时让模型输出与这些角色对应的结构化内容，再映射回原始元素。可编辑性来自保留原生对象和样式，而不是把整页贴成一张图片。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>实现应保留元素 ID 和原对象映射；处理文本时还要关注段落和 run 样式、母版继承、占位符、组合与图表关系。当前指定仓库找到相关原生 PPT 练习和重建 schema，但未确认完整语义模板生产链。</p></div><div><h4>继续追问</h4><p>追问：你现在能展示完整源码入口吗？</p><p>答：这次指定目录还没找到完整历史入口，我可以解释当时方案；需要用历史仓库或交付样例补证，不能拿图像重建代码代替。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把“理解技术方案”说成“已在当前仓库复现完整原生模板链路”。</p></div>
+    <div class="refs"><a href="#source-P16" data-source="P16" class="ref">P16 · 重建对象的结构化 schema</a><a href="#source-R1" data-source="R1" class="ref">R1 · 当前简历：定位与经历</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q28"> 我已能脱稿回答</label><button class="small" data-copy="Q28">复制口述稿</button></div>
+    <label class="note-label" for="note-Q28">我的补充 / 真实案例</label><textarea id="note-Q28" data-note="Q28" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q29" data-group="ppt" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q29</span><span class="qheading">内容与版式为什么不能只按语义相似度匹配？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>同一主题可以是时间线、并列对比或统计图，主题相近不代表布局能承载内容。我把语料和模板都描述成文本、图片、图表等叶节点，以及并列、对比、递进等关系结构，先按页面类型筛候选，再做结构匹配。模型匹配实现会读取候选结构，让模型返回模板序号，解析后检查范围。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>结构匹配解决组织关系，仍要检查容量：条目数、文本长度、图表类型和图片比例。模型选中了一个合法序号，不代表页面一定不溢出，所以最终渲染检查不可省。</p></div><div><h4>继续追问</h4><p>追问：如果所有候选都不合适？</p><p>答：应允许拆页、缩减内容或换路线；不能强迫模型在不适合的模板里填满所有信息。当前代码的具体兜底需按入口确认。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>候选序号校验是结构合法性检查，不是版式质量证明。</p></div>
+    <div class="refs"><a href="#source-P10" data-source="P10" class="ref">P10 · 模型选择模板及序号校验</a><a href="#source-P11" data-source="P11" class="ref">P11 · HTML 模板生成入口</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q29"> 我已能脱稿回答</label><button class="small" data-copy="Q29">复制口述稿</button></div>
+    <label class="note-label" for="note-Q29">我的补充 / 真实案例</label><textarea id="note-Q29" data-note="Q29" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q30" data-group="ppt" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q30</span><span class="qheading">你说的关系树向量怎么编码？有什么问题？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>这是我探索的规则结构编码，不是训练出的语义 embedding。每个节点编码节点类别和类型值，固定最多 6 个孩子、4 层，缺位补空节点，贡献按深度乘 0.8 的幂，最后用余弦相似度比较。按当前实现推导，向量维度是 2×(1+6+36+216)=518。它便于快速比较，但表达能力与类型编码方式都有限。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>要主动讲限制：类型编号引入人为数值距离；深层和超过 6 个的分支会被截断；按类型排序会丢失顺序信息；相同类型节点的内部子树不同，稳定排序也不保证完整的无序树规范化。</p></div><div><h4>继续追问</h4><p>追问：你会怎么改？</p><p>答：区分有序关系与无序并列，用 one-hot 或更明确的结构特征，补容量约束；再用标注匹配集比较规则、模型和组合方案。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>源码中的结构 embedding 文件是另一段被注释的尝试；不要把本规则编码说成已验证有效的深度学习算法。</p></div>
+    <div class="refs"><a href="#source-P8" data-source="P8" class="ref">P8 · 结构向量限制</a><a href="#source-P9" data-source="P9" class="ref">P9 · 递归编码、深度衰减及排序</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q30"> 我已能脱稿回答</label><button class="small" data-copy="Q30">复制口述稿</button></div>
+    <label class="note-label" for="note-Q30">我的补充 / 真实案例</label><textarea id="note-Q30" data-note="Q30" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q31" data-group="ppt" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q31</span><span class="qheading">HTML 模板这条路线具体怎么跑？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先把单页或网格视觉稿拆分、转换成 HTML/CSS，提取结构定义并沉淀模板；生成时把逐页语料与匹配模板交给模型，得到 HTML 后在浏览器渲染。源码有多种转换模式，包括图转 HTML、语料与图片生成、语料与已有 HTML 模板生成，还提供页面操作与视觉审阅入口。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>HTML 的优势是样式和布局容易用代码调整，但浏览器效果不等于 PowerPoint 效果。交付原生 PPTX 时还要做转换，并重新检查字体、换行、透明效果和元素层级。视觉审阅、边界检查存在，不代表所有入口都串成自动修复闭环。</p></div><div><h4>继续追问</h4><p>追问：怎么保证转换前后一样？</p><p>答：用固定渲染尺寸、字体环境和截图对照定位差异；无法等价映射的效果要选择图片保真或降低编辑粒度。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要承诺所有 CSS 效果都能转换成原生可编辑 PPT 对象。</p></div>
+    <div class="refs"><a href="#source-P11" data-source="P11" class="ref">P11 · HTML 模板生成入口</a><a href="#source-P12" data-source="P12" class="ref">P12 · 浏览器批量页面操作</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q31"> 我已能脱稿回答</label><button class="small" data-copy="Q31">复制口述稿</button></div>
+    <label class="note-label" for="note-Q31">我的补充 / 真实案例</label><textarea id="note-Q31" data-note="Q31" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q32" data-group="ppt" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q32</span><span class="qheading">整页图片怎样变成可编辑 PPT？请讲完整流程。<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先检测布局并识别文字和视觉区域，按元素裁剪；把要移除的区域做成遮罩并修复背景；对文字区域做 OCR，再提取字体、字号、颜色、段落和层级；视觉区域保留为独立图片。最后把像素坐标映射到 PPTX 的坐标，先铺背景，再按层级加入文字框与图片，导出单页及完整 PPTX。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>关键是把“像原图”和“可修改”分开看。原生文本框可编辑文字，但复杂图表和插画保留为图片；文本识别失败时也会回退成图片，避免页面完全缺失。</p></div><div><h4>继续追问</h4><p>追问：那它是全可编辑吗？</p><p>答：不是。文字与独立图片支持后续编辑，复杂图形并没有全部恢复成原生语义对象；需要按对象统计编辑覆盖。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>裁剪图片可移动、缩放，不等于图表数据和内部形状可编辑。</p></div>
+    <div class="refs"><a href="#source-P1" data-source="P1" class="ref">P1 · 重建单页入口</a><a href="#source-P4" data-source="P4" class="ref">P4 · 按层级还原前后遮挡</a><a href="#source-P5" data-source="P5" class="ref">P5 · 识别失败回退图片</a><a href="#source-P15" data-source="P15" class="ref">P15 · 像素坐标到 EMU</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q32"> 我已能脱稿回答</label><button class="small" data-copy="Q32">复制口述稿</button></div>
+    <label class="note-label" for="note-Q32">我的补充 / 真实案例</label><textarea id="note-Q32" data-note="Q32" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q33" data-group="ppt" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q33</span><span class="qheading">背景修复为什么要膨胀 mask？为什么不能只盖白色？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>只按检测框移除可能留下抗锯齿、阴影或文字边缘，所以要适度膨胀遮罩。底图可能有渐变、纹理和装饰，盖白色会破坏视觉连续性；当前单页流程使用 LaMa 修复，并按文字与视觉区域分组处理。参数里也有按框尺寸比例的定向膨胀，便于覆盖特定方向残留。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>膨胀太大会擦掉原本应保留的内容，修复模型也可能生成不真实纹理，所以要比较原图、遮罩和修复图。重叠区域裁剪还需要去掉上层对象的残影，避免导出时文字在底图和文本框中重复。</p></div><div><h4>继续追问</h4><p>追问：复杂背景修复失败怎么办？</p><p>答：保留中间图供检查，调检测或遮罩；必要时以原图片保真，清楚说明该区域编辑能力降低。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>LaMa 是外部能力，贡献在流程集成、遮罩、分层与交付，不是训练了新的修复模型。</p></div>
+    <div class="refs"><a href="#source-P2" data-source="P2" class="ref">P2 · 背景修复与遮罩参数</a><a href="#source-P5" data-source="P5" class="ref">P5 · 识别失败回退图片</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q33"> 我已能脱稿回答</label><button class="small" data-copy="Q33">复制口述稿</button></div>
+    <label class="note-label" for="note-Q33">我的补充 / 真实案例</label><textarea id="note-Q33" data-note="Q33" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q34" data-group="ppt" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q34</span><span class="qheading">文字位置、字体、层级如何恢复？最容易出什么错？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>位置按原图尺寸与幻灯片尺寸做比例映射到 EMU；文字 schema 保存段落、run、字体和层级信息；渲染时按 layer 排序，保证前后关系。字体和字号提取是估计，最终要在真实 PPT 渲染里复核。代码还会归一相近字号、适当扩展文本框宽度，减少不必要的换行。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>常见问题包括字体缺失后的替换、同一文本框混合字号、文字行高与 PowerPoint 度量不同、裁剪图残留遮挡以及边框外溢。宽度扩展只能缓解一部分换行，也可能改变对齐，因此需要视觉对照。</p></div><div><h4>继续追问</h4><p>追问：为什么 OCR 正确但 PPT 仍不好看？</p><p>答：OCR 解决文字识别，版式还依赖字体度量、坐标、行间距和层级；这几个误差会叠加。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不能仅凭 OCR 字符准确率推导整页视觉还原度。</p></div>
+    <div class="refs"><a href="#source-P15" data-source="P15" class="ref">P15 · 像素坐标到 EMU</a><a href="#source-P16" data-source="P16" class="ref">P16 · 重建对象的结构化 schema</a><a href="#source-P4" data-source="P4" class="ref">P4 · 按层级还原前后遮挡</a><a href="#source-P5" data-source="P5" class="ref">P5 · 识别失败回退图片</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q34"> 我已能脱稿回答</label><button class="small" data-copy="Q34">复制口述稿</button></div>
+    <label class="note-label" for="note-Q34">我的补充 / 真实案例</label><textarea id="note-Q34" data-note="Q34" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q35" data-group="ppt" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q35</span><span class="qheading">搜索、内容规划、生图当前真的打通了吗？两分钟指什么？<span class="qmeta"><span class="badge gap">部分支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>需要按路线和入口回答。HTML 模板路线有资料整理、规划与页面生成模块。整页生图入口会执行搜索、把资料写到目录，并将 extra_info 传给图片链；但当前图片链的大纲模型调用只传 prompt，extra_info 没有进入这个调用。因此不能声称当前整页大纲已经利用了搜索资料。简历的“两分钟”限定为结构化模板路线的大纲与幻灯片结构生成，不是整份高分辨率 PPT 交付。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>这类追问最好直接指出数据流缺口，再讲改造方案：资料需要进入大纲和逐页内容规划，保存来源映射，限制上下文长度，并用依赖外部资料的测试验证它确实被消费。</p></div><div><h4>继续追问</h4><p>追问：既然参数传进去了为什么没起作用？</p><p>答：接口存在不等于下游使用。应该从入口追到实际模型调用，而不是只看函数参数名。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>当前源码没有两分钟指标的完整实验记录；页数、模型、输入量和计时范围需要补齐。</p></div>
+    <div class="refs"><a href="#source-P6" data-source="P6" class="ref">P6 · 搜索文本被传入图片链</a><a href="#source-P7" data-source="P7" class="ref">P7 · 大纲调用当前只传 prompt</a><a href="#source-R1" data-source="R1" class="ref">R1 · 当前简历：定位与经历</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q35"> 我已能脱稿回答</label><button class="small" data-copy="Q35">复制口述稿</button></div>
+    <label class="note-label" for="note-Q35">我的补充 / 真实案例</label><textarea id="note-Q35" data-note="Q35" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q36" data-group="ppt" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q36</span><span class="qheading">并发、顺序、失败重试和任务恢复怎么做？<span class="qmeta"><span class="badge ok">源码支持</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>当前生图使用有界线程池，样式提取最多 5 个 worker，逐页生图入口使用 2 个。通用并发函数先提交所有 futures，再按输入顺序取结果，所以返回顺序稳定，等待前面的任务不会阻止已提交任务并行运行。中间结果按任务和页面落盘，已有产物可以复用，失败结果显式保留，便于定位和重试。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>工程边界要讲清：任务管理器主要是进程内字典加磁盘历史扫描，不能说成分布式队列；按文件存在跳过也没有自动证明输入、模型和提示词一致。进一步可加入内容指纹、原子落盘、每阶段状态和受控重试。</p></div><div><h4>继续追问</h4><p>追问：future.result 超时后任务就停止了吗？</p><p>答：等待超时不等于取消正在运行的线程；外部请求还要配置超时与取消策略，线程池退出也可能继续等待。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>缓存复用、历史展示、断点恢复和跨进程任务协调是不同能力。</p></div>
+    <div class="refs"><a href="#source-P3" data-source="P3" class="ref">P3 · 样式提取并发与按元素归集</a><a href="#source-P13" data-source="P13" class="ref">P13 · 提交并发、输入顺序收集结果</a><a href="#source-P14" data-source="P14" class="ref">P14 · 进程内任务管理器及历史加载</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q36"> 我已能脱稿回答</label><button class="small" data-copy="Q36">复制口述稿</button></div>
+    <label class="note-label" for="note-Q36">我的补充 / 真实案例</label><textarea id="note-Q36" data-note="Q36" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-note" data-section="note"><div class="section-title"><span class="section-num">05</span><div><h2>笔记 AI</h2><p>Dify 编排、向量排序与文档适配</p></div><span class="count">7 题</span></div><div class="flow" aria-label="项目主线"><span>历史追问</span><span>类型路由</span><span>资料过滤排序</span><span>引用 / 输出适配</span></div><article class="question" id="Q37" data-group="note" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q37</span><span class="qheading">笔记 AI 你主要做了什么？Dify 和 Python 各负责什么？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我主要做搜索工作流和面向笔记助手的适配。Dify 负责把查询理解、搜索类型判断、外部检索、向量处理和结果输出编排起来；Python 节点负责参数解析、资料归一、过滤排序和上下文格式。我的贡献是把资料变成上层助手可以使用和引用的上下文，以及按文档任务约定输入输出，而不是重新训练一个搜索模型。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>当前目录保留两类工作流：面向直接回答的流程和作为搜索工具返回资料的流程。说明时区分“给答案”和“给上层提供资料”，不要把工具层包成独立完成所有文档编辑。</p></div><div><h4>继续追问</h4><p>追问：用 Dify 会不会只是拖节点？</p><p>答：节点编排之外要解决多轮查询语义、异构结果、向量顺序、引用结构和失败分支，关键在接口契约与可检查的数据流。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>本次没有连接 Dify 实例，核对的是导出工作流和脚本，不是线上运行结果。</p></div>
+    <div class="refs"><a href="#source-N1" data-source="N1" class="ref">N1 · 历史对话与搜索配置</a><a href="#source-N3" data-source="N3" class="ref">N3 · 向量相似度过滤排序</a><a href="#source-N6" data-source="N6" class="ref">N6 · 资料整理为带编号的上下文</a><a href="#source-N9" data-source="N9" class="ref">N9 · Dify 并行向量节点</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q37"> 我已能脱稿回答</label><button class="small" data-copy="Q37">复制口述稿</button></div>
+    <label class="note-label" for="note-Q37">我的补充 / 真实案例</label><textarea id="note-Q37" data-note="Q37" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q38" data-group="note" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q38</span><span class="qheading">为什么要把追问改写成独立查询？怎么避免改错？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>“相关论文有哪些”单独拿去搜没有主题，所以要结合历史对话补全讨论对象，再形成可以独立检索的查询。代码会把 user 和 assistant 历史组织成 human/ai 文本，按搜索类型生成查询改写提示。查询改写应补齐省略信息，同时保留当前问题的约束，而不是随意扩大主题。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>例如先问“RRF 和加权融合的区别”，再问“有没有相关论文”，目标应围绕两类融合，而不是泛搜 AI 论文。改写质量应单独检查实体、时间和否定条件，避免最终搜索失败后才发现源头错误。</p></div><div><h4>继续追问</h4><p>追问：历史很长或前文有错误怎么办？</p><p>答：限定相关历史，优先当前明确问题；对冲突信息澄清。检索 query 应可记录、可对比，不能把历史助手回答自动当作事实。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>提示词要求不能证明改写完全正确；需要带省略、换话题和否定约束的测试集。</p></div>
+    <div class="refs"><a href="#source-N1" data-source="N1" class="ref">N1 · 历史对话与搜索配置</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q38"> 我已能脱稿回答</label><button class="small" data-copy="Q38">复制口述稿</button></div>
+    <label class="note-label" for="note-Q38">我的补充 / 真实案例</label><textarea id="note-Q38" data-note="Q38" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q39" data-group="note" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q39</span><span class="qheading">搜索类型如何路由？用户指定和自动识别冲突怎么办？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先检查用户指定类型是否在白名单中；合法指定走指定类型，未指定再走分类。源码中有网页、学术、科学、视频、社交这些类别，学术接 arXiv，其他由 SearXNG 的相应搜索类型处理；不需要检索时返回空资料。路由结果和资料一起传给上层，帮助它用合适的输出提示。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>要把“用户没指定”“类型非法”“判定无需搜索”和“搜索失败”区分。非法输入的处理应按实际工作流分支说明；上层不应看到空结果就默认模型已经搜索全网。</p></div><div><h4>继续追问</h4><p>追问：science 和 academic 是一回事吗？</p><p>答：当前路由不是同义词：academic 使用论文来源，science 是元搜索的分类，返回结构和可靠性检查也不同。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>当前是这些来源的路由与适配，不是自己实现了跨互联网抓取和排序系统。</p></div>
+    <div class="refs"><a href="#source-N2" data-source="N2" class="ref">N2 · 搜索类型白名单</a><a href="#source-N9" data-source="N9" class="ref">N9 · Dify 并行向量节点</a><a href="#source-N10" data-source="N10" class="ref">N10 · 学术摘要与网页资料统一</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q39"> 我已能脱稿回答</label><button class="small" data-copy="Q39">复制口述稿</button></div>
+    <label class="note-label" for="note-Q39">我的补充 / 真实案例</label><textarea id="note-Q39" data-note="Q39" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q40" data-group="note" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q40</span><span class="qheading">speed 与 balanced 模式怎么取舍？你用的是 reranker 吗？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>speed 模式过滤空正文，保留来源顺序的前 15 条；balanced 模式为查询和文档生成向量，用余弦相似度做阈值过滤和降序排序，再取前 15 条。后者增加向量调用开销，可能改善语义相关性，前者延迟和成本更低。这里“重排”是向量相似度排序，不是 cross-encoder reranker。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>Dify 导出里文档向量节点支持并行，结果需要按原始索引归集。阈值决定召回与噪声取舍，不同 embedding 模型的分数分布也不同，不能把 0.3 当普适质量分界。</p></div><div><h4>继续追问</h4><p>追问：如何证明 balanced 更好？</p><p>答：在相同输入资料上标注相关性，比较排序质量、有效证据覆盖、延迟与调用成本；当前源码本身不能提供提升百分比。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要把 bi-encoder 相似度排序描述成 query/document 联合编码打分。</p></div>
+    <div class="refs"><a href="#source-N3" data-source="N3" class="ref">N3 · 向量相似度过滤排序</a><a href="#source-N5" data-source="N5" class="ref">N5 · 快速模式保留原序前 15 条</a><a href="#source-N9" data-source="N9" class="ref">N9 · Dify 并行向量节点</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q40"> 我已能脱稿回答</label><button class="small" data-copy="Q40">复制口述稿</button></div>
+    <label class="note-label" for="note-Q40">我的补充 / 真实案例</label><textarea id="note-Q40" data-note="Q40" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q41" data-group="note" data-priority="进阶" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q41</span><span class="qheading">资料与向量并行处理，有什么容易忽视的问题？<span class="qmeta"><span class="badge ok">源码风险＋建议</span><span>进阶</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>最容易出错的是正文列表和向量列表失去对应关系。当前 balanced 脚本先过滤空正文，又按传入向量列表计算索引；只有上游保证两边已经用同样规则过滤并保持顺序，索引才正确。否则可能给 A 的向量匹配 B 的正文，甚至下标越界。面试时我会把它当作明确的数据契约风险来讲。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>改进方案是从开始就给资料稳定 doc_id，把正文、向量与状态作为同一条记录传递；完成后按 ID join，校验一一对应与维度，再排序。不要依赖两个数组位置恰好相同。</p></div><div><h4>继续追问</h4><p>追问：这是线上发生过的事故吗？</p><p>答：本次是静态审阅发现的输入契约风险，附了隔离函数复现；没有线上事故记录就不能包装成真实故障战绩。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>上游若已严格过滤可避免触发，但本脚本没有自证该契约；改进方案尚未写回原项目。</p></div>
+    <div class="refs"><a href="#source-N3" data-source="N3" class="ref">N3 · 向量相似度过滤排序</a><a href="#source-N4" data-source="N4" class="ref">N4 · 正文过滤与 embedding 对齐风险</a><a href="#source-N9" data-source="N9" class="ref">N9 · Dify 并行向量节点</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q41"> 我已能脱稿回答</label><button class="small" data-copy="Q41">复制口述稿</button></div>
+    <label class="note-label" for="note-Q41">我的补充 / 真实案例</label><textarea id="note-Q41" data-note="Q41" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q42" data-group="note" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q42</span><span class="qheading">资料引用怎么做？提示词要求带引用就够了吗？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先把检索结果统一为正文和元信息，再按编号或来源 ID 组织上下文。直接回答流程提示模型使用编号引用，XML 适配则使用相应引用结构。编号必须对应本轮资料并保留来源映射，不能让排序后编号与原始列表错位。提示词能约束输出习惯，但不能替代引用有效性和证据支持度检查。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>当前学术适配能提供标题、时间、作者与摘要，但并不保证所有结果都有 URL；不能自动说每条来源都能点击追溯。严格引用校验是可继续增强的方向，要与客服项目已实现的 evidence 校验区别。</p></div><div><h4>继续追问</h4><p>追问：每句话都有引用，是否更可信？</p><p>答：格式上有引用不代表来源支持结论，还要检查是否真的来自该资料，是否被断章取义。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>XML-only 是仓库中模型提示词的内容，不是本手册或当前助手需要遵守的指令。</p></div>
+    <div class="refs"><a href="#source-N6" data-source="N6" class="ref">N6 · 资料整理为带编号的上下文</a><a href="#source-N7" data-source="N7" class="ref">N7 · XML 输出协议存在于提示词</a><a href="#source-N10" data-source="N10" class="ref">N10 · 学术摘要与网页资料统一</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q42"> 我已能脱稿回答</label><button class="small" data-copy="Q42">复制口述稿</button></div>
+    <label class="note-label" for="note-Q42">我的补充 / 真实案例</label><textarea id="note-Q42" data-note="Q42" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q43" data-group="note" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q43</span><span class="qheading">问答、改写、续写有什么不同？语雀导入做到哪一步？<span class="qmeta"><span class="badge gap">部分支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>按任务契约，问答输出回答内容，改写输出用于替换选区的文本，续写输出插入点之后的新增内容；应用负责真正修改页面。当前目录能看到 XML 输出协议和检索适配，但没有定位到完整的选区写回宿主实现。语雀脚本有元数据、tocYml 与树结构处理尝试，parseDoc 正文解析仍是占位，因此这份快照不足以证明完整导入交付。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>我会按实际参与范围说“上下文和输出适配，参与格式转换与导入”，再用历史代码或演示补齐已交付部分。导入还需处理父子关系、兄弟顺序、资源映射与重试，不能只看到解析函数就说已经支持完整迁移。</p></div><div><h4>继续追问</h4><p>追问：parseMetaToTree 有没有隐患？</p><p>答：当前函数有局部树赋值、children 结构不一致和重试预算等需要核对的问题，且未返回完整树；应补确定性样例再确认可用范围。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要用 FPL 思绪工坊今天的完整编辑能力证明 2024 年笔记项目当时的实现。</p></div>
+    <div class="refs"><a href="#source-N7" data-source="N7" class="ref">N7 · XML 输出协议存在于提示词</a><a href="#source-N8" data-source="N8" class="ref">N8 · 语雀正文解析仍为占位</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q43"> 我已能脱稿回答</label><button class="small" data-copy="Q43">复制口述稿</button></div>
+    <label class="note-label" for="note-Q43">我的补充 / 真实案例</label><textarea id="note-Q43" data-note="Q43" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-data" data-section="data"><div class="section-title"><span class="section-num">06</span><div><h2>数据工程与 GRPO</h2><p>评测口径、奖励设计与数字追问</p></div><span class="count">7 题</span></div><div class="flow" aria-label="项目主线"><span>任务样本</span><span>执行与比较</span><span>评测 / 奖励</span><span>独立验证</span></div><article class="question" id="Q44" data-group="data" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q44</span><span class="qheading">数据工程做了什么？为什么不是直接比模型输出文本？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>按简历，这段工作围绕 Excel 任务样本、执行结果对拍、自动评测和奖励函数。相同操作可能由不同代码实现，代码字符串不一样不等于结果错，所以重点应该是同一输入上执行后表格的内容与结构。我的介绍会把样本构建、执行验证和训练奖励拆开，分别说明输入、判定与用途。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>当前指定四个目录没有找到完整 JSA 执行评测或 GRPO 奖励实现。这题的经历依据来自简历，执行对拍与规范化方法还需用历史脚本和样本确认；不把下面的设计建议冒充已查到的源码。</p></div><div><h4>继续追问</h4><p>追问：JSA 是什么运行环境？</p><p>答：要补充当时所用的准确全称、API 与版本；目前材料不足，不能擅自等同于任意 JavaScript、Office Scripts 或 VBA。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>先补齐 JSA 环境、本人负责模块和历史代码位置，再准备逐行解释。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q44"> 我已能脱稿回答</label><button class="small" data-copy="Q44">复制口述稿</button></div>
+    <label class="note-label" for="note-Q44">我的补充 / 真实案例</label><textarea id="note-Q44" data-note="Q44" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q45" data-group="data" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q45</span><span class="qheading">Excel 结果对拍时，哪些内容需要规范化？MD5 能证明正确吗？<span class="qmeta"><span class="badge ok">方法建议</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>方法上要先定义业务等价，再比较。需要约定工作表和行列顺序、单元格值与类型、日期表示、空值、数值容差，以及任务是否要求公式或格式。将业务相关内容转换为确定性结构后，哈希只能用于快速判断该结构是否完全一致；不一致时还要输出可解释的差异，不能只给一个 MD5 值。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>例如文件创建时间、ZIP 包内部顺序可能无关；排序任务的行顺序却是关键，不能为方便比较把它排序掉。若任务要求公式，不能只比计算后的值。MD5 不证明业务正确，也不适合充当抗篡改安全依据。</p></div><div><h4>继续追问</h4><p>追问：数值 1 和 1.0，日期字符串与日期对象算相同吗？</p><p>答：由任务契约决定。先规范类型并设容差，再判断，不能用一套全局字符串规则抹平所有差异。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>这是建议的完整比较口径；简历对应历史代码未找到，实际当时实现了哪些需要本人确认。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q45"> 我已能脱稿回答</label><button class="small" data-copy="Q45">复制口述稿</button></div>
+    <label class="note-label" for="note-Q45">我的补充 / 真实案例</label><textarea id="note-Q45" data-note="Q45" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q46" data-group="data" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q46</span><span class="qheading">92.4%、97.9%、每天节省 4 小时分别怎么证明？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>这些数字必须有不同的分母与记录。92.4% 要说明自动评分与人工评分如何判一致、样本数及人工复核方式；85.7% 到 97.9% 要说明“验证准确率”的标签、数据划分和是否同一测试集；每天节省超过 4 小时则需要日均任务量、原人工时长、自动后复审时长与统计周期。当前材料没有这些原始记录，我不能替它们补造口径。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>填写模板：指标定义【待填】；样本数【待填】；数据日期与版本【待填】；人工标准【待填】；对照设置【待填】。85.7%→97.9% 是增加 12.2 个百分点，不应写成增加 12.2% 相对比例。</p></div><div><h4>继续追问</h4><p>追问：既然现在拿不出报告，还应该放简历吗？</p><p>答：能找到当时记录就补齐；找不到就改成可证明的方法和范围，不用无法解释的精确数字承担追问风险。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>自动与人工一致不等于模型真实准确率，也可能二者一起出错。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q46"> 我已能脱稿回答</label><button class="small" data-copy="Q46">复制口述稿</button></div>
+    <label class="note-label" for="note-Q46">我的补充 / 真实案例</label><textarea id="note-Q46" data-note="Q46" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q47" data-group="data" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q47</span><span class="qheading">GRPO 是什么？与“写一个奖励函数”有什么区别？<span class="qmeta"><span class="badge gap">理论＋经历待补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>GRPO 是一种策略优化方法：对同一个问题采样多份回答，计算奖励，用组内相对得分估计优势，再更新策略。原始方案保留裁剪的策略比目标与参考策略 KL 约束，不需要另训练 PPO 式价值模型。奖励函数只是其中的评分模块。我简历里的个人贡献是奖励设计与字段校验，不能据此声称独立完成了完整强化学习训练系统。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>口头可写组内优势 Aᵢ≈(rᵢ−组均值)/(组标准差+ε)。这是帮助理解的简化式，原始 GRPO 的 token 聚合、裁剪和 KL 仍要区分；实际训练框架、模型、采样数和超参目前都待补。理论依据见 DeepSeekMath 第 4.1 节。</p></div><div><h4>继续追问</h4><p>追问：组内奖励全一样怎么办？</p><p>答：相对优势没有区分度；实现需处理零方差，并检查样本难度、奖励饱和或评分器失效。不能凭空说我当时用了哪种框架处理策略。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>理论来自论文；项目中采用的具体 GRPO 版本与训练配置尚无源码证据。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a><a href="#source-W1" data-source="W1" class="ref">W1 · GRPO 原始论文（2024）</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q47"> 我已能脱稿回答</label><button class="small" data-copy="Q47">复制口述稿</button></div>
+    <label class="note-label" for="note-Q47">我的补充 / 真实案例</label><textarea id="note-Q47" data-note="Q47" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q48" data-group="data" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q48</span><span class="qheading">分层关键词奖励会不会只学会堆关键词？你会怎么解释设计？<span class="qmeta"><span class="badge ok">方法建议</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>会有这种风险，所以我会把“字段存在”与“结果正确”分开。根据简历，我做过分层关键词奖励和文本、日期、数值校验；更完整的设计是先校验可解析性与字段类型，再判断必要字段和内容约束，最后结合执行结果或语义正确性。仅命中关键词不应该拿到满分。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>可讨论的建议结构是：格式门控 ×（字段完整性＋类型有效性＋任务结果正确性），权重和门槛要通过消融确定。这是设计示例，不是已核实的历史公式。对重复字段、无意义堆词、单位错和日期非法设置反例，观察模型是否钻评分漏洞。</p></div><div><h4>继续追问</h4><p>追问：字段命中率上升但结果更差怎么办？</p><p>答：说明代理指标被优化了，应该看独立任务成功率、解析失败率和人工抽检，再调整奖励，不能只庆祝字段指标。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>没有原奖励代码，不能给出假装精确的权重、正则表达式或惩罚值。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q48"> 我已能脱稿回答</label><button class="small" data-copy="Q48">复制口述稿</button></div>
+    <label class="note-label" for="note-Q48">我的补充 / 真实案例</label><textarea id="note-Q48" data-note="Q48" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q49" data-group="data" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q49</span><span class="qheading">70.3% 到 89.6%，以及整体提升 8.4%，怎么证明是奖励函数带来的？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>先确认定义，再做受控对照。字段命中率从 70.3% 到 89.6% 增加 19.3 个百分点，相对增长约 27.5%；整体准确率提升 8.4% 目前不知道是相对值还是百分点。要归因给奖励函数，应固定基础模型、训练数据、训练步数和评测集，至少比较原奖励、只加字段约束、再加分层或类型校验的消融。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>还应按任务类别看变化，使用独立测试集，报告多次运行或置信区间，并防止同源模板泄漏。若同时改变了数据、提示词和训练量，最多说组合改动后的结果，不能把全部收益归给一个模块。</p></div><div><h4>继续追问</h4><p>追问：你做过这些消融吗？</p><p>答：当前源码和简历没有完整记录，需查当时实验；没有就说明尚不能做强因果归因，并讲清建议验证方案。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>8.4% 的口径是这份简历最值得优先补齐的一项。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q49"> 我已能脱稿回答</label><button class="small" data-copy="Q49">复制口述稿</button></div>
+    <label class="note-label" for="note-Q49">我的补充 / 真实案例</label><textarea id="note-Q49" data-note="Q49" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q50" data-group="data" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q50</span><span class="qheading">样本扩充与自动标注怎么防止低质量和数据泄漏？<span class="qmeta"><span class="badge gap">需补证</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会按表格类型、业务内容和操作任务建立覆盖矩阵，生成后验证结构和可执行性，把异常结果交给人工复审。对拍不一致可以筛出可疑样本，但多份输出相同也不自动等于正确。训练、验证、测试最好按原始表格或模板族划分，避免同一张表换几个值就同时出现在训练和测试里。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>需要补齐的经历证据是：种子集规模、扩充规模、去重规则、标注标准、复审比例与任务类别分布。不同模型或多次采样有助于发现差异，但仍可能共享系统偏差。</p></div><div><h4>继续追问</h4><p>追问：怎么判断分布均衡？</p><p>答：明确按哪些维度统计，例如表格类型、行列规模、任务和行业；给出分布表。没有统计就只说覆盖扩充，不能声称严格均衡。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>本次指定源码没有样本生成与标注系统完整实现，此题作为待补证经历及方法练习。</p></div>
+    <div class="refs"><a href="#source-R2" data-source="R2" class="ref">R2 · 简历中的历史评测与奖励数字</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q50"> 我已能脱稿回答</label><button class="small" data-copy="Q50">复制口述稿</button></div>
+    <label class="note-label" for="note-Q50">我的补充 / 真实案例</label><textarea id="note-Q50" data-note="Q50" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section><section class="question-section" id="section-cross" data-section="cross"><div class="section-title"><span class="section-num">07</span><div><h2>综合与压力面</h2><p>AI 辅助开发、故障分析与反问</p></div><span class="count">4 题</span></div><div class="flow" aria-label="项目主线"><span>定位问题</span><span>解释取舍</span><span>提供证据</span><span>承认边界</span></div><article class="question" id="Q51" data-group="cross" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q51</span><span class="qheading">你用了很多 AI 编程，如何证明技术能力？<span class="qmeta"><span class="badge ok">源码支持</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会用关键设计和可验证结果回答，而不是只报生成了多少代码。我需要定义业务对象与接口，判断模型输出是否符合系统边界，处理版本、并发、取消和失败，再用测试和演示确认。比如 FPL 的幂等回执、客服的证据范围校验，都是可以解释输入、约束、状态转移和失败行为的模块。AI 可以参与实现，但我对最终取舍和验证负责。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>准备现场讲一个模块：先画数据流，再指出两个不变量，最后用反例说明为什么这么设计。遇到不熟悉的生成代码，回到接口与测试核实，不能把“AI 写的”当作不解释的理由。</p></div><div><h4>继续追问</h4><p>追问：不用 AI 还能写吗？</p><p>答：可以现场实现一个缩小版本，例如 RRF、CAS 伪代码或证据范围校验，并解释复杂度与测试边界；生产能力仍要靠真实系统验证。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不要编造个人代码行数、手写比例或 AI 提效百分比。</p></div>
+    <div class="refs"><a href="#source-C4" data-source="C4" class="ref">C4 · RRF 的实际公式</a><a href="#source-C6" data-source="C6" class="ref">C6 · 只接受已展示且版本一致的证据</a><a href="#source-F5" data-source="F5" class="ref">F5 · 回执重放与请求指纹</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q51"> 我已能脱稿回答</label><button class="small" data-copy="Q51">复制口述稿</button></div>
+    <label class="note-label" for="note-Q51">我的补充 / 真实案例</label><textarea id="note-Q51" data-note="Q51" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q52" data-group="cross" data-priority="必会" data-gap="true">
+    <details class="qa"><summary><span class="qid">Q52</span><span class="qheading">讲一个最困难的问题或失败案例。<span class="qmeta"><span class="badge gap">个人故事待填</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会选择自己确实处理过、能提供记录的一个案例。当前源码适合展开的技术主题是：检索证据不能越过已读范围、用户和 Agent 并发编辑不覆盖、PPT 可编辑性与视觉还原取舍。回答按“具体触发→旧方案为什么不行→我做的改动→如何验证→仍有什么限制”组织。若没有真实故障记录，我会把它讲成设计难点，不包装成线上事故。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>练习模板：当时场景【待填】；出现的问题【待填】；本人定位证据【待填】；排除方案【待填】；最终改动【待填】；复验结果【待填】。可用本手册的代码风险作预演，但要与亲历故事区分。</p></div><div><h4>继续追问</h4><p>追问：为什么不用更简单的办法？</p><p>答：说明简单方案能解决什么、在哪个反例下失效、增加机制的代价；如果目前更简单的方案足够，也可以承认。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>本手册没有替你捏造发布故障、客户投诉或团队冲突。</p></div>
+    <div class="refs"><a href="#source-C7" data-source="C7" class="ref">C7 · 选区不能越过已读范围</a><a href="#source-F7" data-source="F7" class="ref">F7 · 数据库 CAS 条件</a><a href="#source-P5" data-source="P5" class="ref">P5 · 识别失败回退图片</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q52"> 我已能脱稿回答</label><button class="small" data-copy="Q52">复制口述稿</button></div>
+    <label class="note-label" for="note-Q52">我的补充 / 真实案例</label><textarea id="note-Q52" data-note="Q52" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q53" data-group="cross" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q53</span><span class="qheading">接下来优先优化什么？如果流量翻十倍怎么办？<span class="qmeta"><span class="badge ok">改进建议</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会先定位瓶颈再改架构。客服目前是单后端约束，先测活动会话、模型等待、连接池、索引任务和语音资源，再处理多实例需要的持久协调与共享依赖；PPT 优先验证搜索资料真实进入规划、缓存是否与输入一致；笔记优先修正资料与向量对齐；FPL 则继续核对跨应用任务、审批和素材状态边界。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>把优化目标写成可观察指标：P95 延迟、任务成功率、陈旧写入拦截、导出编辑覆盖、真实任务成功率及单位成本。扩容前先准备分层压测，不能把模型供应商限速和本地 CPU 瓶颈混在一起。</p></div><div><h4>继续追问</h4><p>追问：直接加 Redis 和消息队列行不行？</p><p>答：组件不会自动解决幂等、租约、取消、事务和外部副作用；先确定需要的保证，再选技术。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>这些是基于源码的后续建议，不能表述为已完成的优化成果。</p></div>
+    <div class="refs"><a href="#source-C15" data-source="C15" class="ref">C15 · 当前单后端实例约束</a><a href="#source-P7" data-source="P7" class="ref">P7 · 大纲调用当前只传 prompt</a><a href="#source-N4" data-source="N4" class="ref">N4 · 正文过滤与 embedding 对齐风险</a><a href="#source-F8" data-source="F8" class="ref">F8 · 租约过期转 unknown，不自动重派</a></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q53"> 我已能脱稿回答</label><button class="small" data-copy="Q53">复制口述稿</button></div>
+    <label class="note-label" for="note-Q53">我的补充 / 真实案例</label><textarea id="note-Q53" data-note="Q53" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article><article class="question" id="Q54" data-group="cross" data-priority="必会" data-gap="false">
+    <details class="qa"><summary><span class="qid">Q54</span><span class="qheading">面试结尾你会反问什么？<span class="qmeta"><span class="badge ok">表达建议</span><span>必会</span></span></span><span class="chevron" aria-hidden="true">＋</span></summary>
+    <div class="answer"><div class="answer-label">可以这样回答 <span>约 45–90 秒，按实际经历调整</span></div><div class="oral"><p>我会优先了解岗位的真实工作：团队最想解决的是模型效果、Agent 执行可靠性，还是文档交付质量？目前如何定义上线成功，是否有真实任务评测集？算法和产品工程的责任如何划分？入职前几个月希望我交付什么？这些问题能帮助我判断能否把检索、文档和应用工程经验用到具体问题上。</p></div>
+    <div class="deeper"><div><h4>展开解释</h4><p>如果是客服或企业 Agent，追问工具副作用、权限和人工交接要求；如果是智能文档，追问可编辑粒度与版式验收；如果是训练与评测，追问数据、奖励与独立验证的分工。</p></div><div><h4>继续追问</h4><p>追问：你期望什么工作？</p><p>答：希望负责有明确业务目标的 Agent 或 AI 创作能力，既能做策略与效果迭代，也能把关键流程交付并验证。</p></div></div>
+    <div class="boundary"><b>回答边界</b><p>不假定对方公司使用某框架或特定模型；根据面试中已知情况调整。</p></div>
+    <div class="refs"><span class="muted">表达建议，无项目事实引用。</span></div>
+    <div class="practice"><label><input type="checkbox" data-master="Q54"> 我已能脱稿回答</label><button class="small" data-copy="Q54">复制口述稿</button></div>
+    <label class="note-label" for="note-Q54">我的补充 / 真实案例</label><textarea id="note-Q54" data-note="Q54" rows="2" placeholder="补上你实际做过的版本、实验或案例；仅保存在本机当前浏览器。"></textarea>
+    </div></details></article></section>
+<section class="appendix" id="gaps-section"><h2>面试前，优先补齐这些证据。</h2><p class="intro">这些地方最容易被连续追问。能找到记录就补记录，找不到就收窄表述，避免精确数字超出可解释范围。</p><div class="table-wrap"><table><thead><tr><th>主题</th><th>当前核对结果</th><th>准备材料 / 回答策略</th><th>相关题目</th></tr></thead><tbody><tr><td>历史百分比与节省时间</td><td>92.4%、97.9%、89.6%、8.4%、每天 4 小时</td><td>指标定义、分母、数据划分、对照版本、统计周期、原始报告；8.4% 的相对/百分点口径。</td><td>Q05 · Q46 · Q49</td></tr><tr><td>PPT 原生语义模板</td><td>完整历史实现入口本次未定位</td><td>原仓库/分支、元素映射与保留样式的源码、可编辑导出样例；两分钟计时范围与日志。</td><td>Q27 · Q28 · Q35</td></tr><tr><td>PPT 搜索进入规划</td><td>extra_info 传入但当前大纲调用未消费</td><td>明确描述当前缺口；若补齐，应使用依赖外部事实的测试验证资料确实参与规划。</td><td>Q35</td></tr><tr><td>笔记文档编辑与导入</td><td>XML 提示存在；宿主写回未找到；语雀正文 parseDoc 为占位</td><td>实际负责边界、历史工作流与宿主接口、导入样例；不能用 FPL 当前能力代替。</td><td>Q43</td></tr><tr><td>数据工程与 GRPO</td><td>指定目录未找到完整奖励、JSA 与训练报告</td><td>JSA 全称与版本、奖励代码、训练框架、基础模型、采样数、超参、消融及本人分工。</td><td>Q44–Q50</td></tr><tr><td>部署与规模</td><td>客服当前为单后端实例；没有本次容量验证</td><td>用户数与并发会话分开，补真实压测与运行报告；不要承诺多实例和高可用。</td><td>Q26 · Q53</td></tr><tr><td>个人贡献与真实故事</td><td>源码证明实现，不独立证明作者和当时版本</td><td>准备代表提交、团队分工、本人真正定位过的难点与复验记录。</td><td>Q03 · Q52</td></tr></tbody></table></div></section>
+<section class="appendix" id="sources-section"><h2>源码索引与核对边界</h2><p class="intro">所有摘录取自实际读取的文件。行号对应本次本地快照；后续改动可能使行号变化。展开可看短摘录，无需再打开整个项目。</p><div class="method"><p><b>核对方法：</b>静态读取简历、四个项目的关键入口与实现，沿输入、模型调用、校验、状态和提交追踪；查看部分测试设计。本次没有启动项目、调用真实模型、访问业务数据库，或运行四个项目的完整测试与容量评测。</p><p><b>隔离复现：</b>已隔离复现：当正文含空项而向量仍保留原列表时，balanced 排序可触发 IndexError。正常对齐样例通过。未连接 Dify，未执行原项目入口。</p><p><b>版本范围：</b>下面是当前工作树，不等于 2024/2025 年交付时的历史实现；commit 只定位基线，未提交改动也纳入已读文件。个人作者身份与团队分工无法仅靠当前源码证明。工作树变更数包含未跟踪文件。</p><p><b>原文与指令：</b>项目提示词、样例与导出工作流作为待分析资料，不作为当前任务指令；未把其中的凭据、运行数据或个人联系方式写入本手册。GRPO 理论仅引用 <a href="https://arxiv.org/html/2402.03300v3#S4.SS1" target="_blank" rel="noopener">DeepSeekMath 原始论文第 4.1 节</a>。</p><div class="repo"><b>FPL</b><span>/Users/tonghao/Projects/Future-Props-Lab</span><code>83ad41fc</code><small>1 项工作树变更</small></div><div class="repo"><b>CS</b><span>/Users/tonghao/Projects/AI-customer</span><code>fcdb6eb</code><small>0 项工作树变更</small></div><div class="repo"><b>PPT</b><span>/Users/tonghao/Projects/ppt-pipeline</span><code>4d6778e</code><small>0 项工作树变更</small></div><div class="repo"><b>NOTE</b><span>/Users/tonghao/Projects/projects</span><code>919dacc</code><small>4 项工作树变更</small></div><div class="repo"><b>CV</b><span>/Users/tonghao/Projects/jianli</span><code>d2d9850</code><small>1 项工作树变更</small></div></div><details class="source" id="source-R1"><summary><b>R1</b> 当前简历：定位与经历</summary><div class="source-body"><div class="filepath"><a href="resume.tex" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/jianli/resume.tex:31</a></div><pre>  31  \section{个人摘要}
+  32  商汤科技算法研究员，聚焦 Agent 应用与 AI 辅助创作。独立搭建 AI Native 客服中台与多工坊创作平台，研究 PPT 生成的三条技术路线，具备知识检索、模板匹配、可编辑重建及自动评测经验。
+  33  
+  34  \section{教育与奖项}
+  35  \datedline{\textbf{厦门理工学院}，计算机技术，工学硕士}{2023.09 -- 2026.06}
+  36  \datedline{\textbf{福州大学}，计算机科学与技术，工学学士}{2018.09 -- 2022.06}
+  37  本科排名 20/151（前 15\%）；获国家励志奖学金、一等奖学金；曾任院学生会副主席。
+  38  \begin{itemize}</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：925c980c5cf57edbc0bb50b2bd8d489d6e9cdaa8cd1a2599afcea6f2277f3f7a</small></div></details><details class="source" id="source-R2"><summary><b>R2</b> 简历中的历史评测与奖励数字</summary><div class="source-body"><div class="filepath"><a href="resume.tex" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/jianli/resume.tex:99</a></div><pre>  99    \item \textbf{自动评测：}构建基于 Excel 执行结果对拍的评测流程，与人工评分一致性达 \textbf{92.4\%}，日均节省评测人力\textbf{超过 4 小时}；推理结果验证准确率由 85.7\% 提升至 \textbf{97.9\%}。
+ 100    \item \textbf{奖励函数设计：}设计 GRPO 分层关键词奖励函数，约束结构化字段，并实现文本、日期与数值校验；字段命中率由 70.3\% 提升至 \textbf{89.6\%}，整体生成准确率提升 \textbf{8.4\%}。
+ 101  \end{itemize}
+ 102  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：925c980c5cf57edbc0bb50b2bd8d489d6e9cdaa8cd1a2599afcea6f2277f3f7a</small></div></details><details class="source" id="source-F1"><summary><b>F1</b> Agent 连接定义</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/contracts/agent_runtime/definitions.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/contracts/agent_runtime/definitions.py:17</a></div><pre>  17  DEFINITIONS = {
+  18      &quot;codex&quot;: AgentDefinition(&quot;codex&quot;, &quot;Codex&quot;, &quot;codex&quot;, (0, 163, 0), (&quot;login&quot;, &quot;status&quot;)),
+  19      &quot;claude-code&quot;: AgentDefinition(
+  20          &quot;claude-code&quot;, &quot;Claude Code&quot;, &quot;claude&quot;, (2, 1, 259), (&quot;auth&quot;, &quot;status&quot;)
+  21      ),
+  22      &quot;opencode&quot;: AgentDefinition(&quot;opencode&quot;, &quot;OpenCode&quot;, &quot;opencode&quot;, (1, 19, 4), (&quot;auth&quot;, &quot;list&quot;)),
+  23      &quot;dsh&quot;: AgentDefinition(&quot;dsh&quot;, &quot;DeepSeek Harness&quot;, &quot;dsh&quot;, (0, 2, 1), ()),
+  24      &quot;pi&quot;: AgentDefinition(&quot;pi&quot;, &quot;Pi&quot;, &quot;pi&quot;, (1, 4, 0), (&quot;auth&quot;, &quot;check&quot;, &quot;--json&quot;, &quot;--no-refresh&quot;)),
+  25  }</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：5f16d8b176b260cabe737d0aee3ef4daf37feae4b54f0a687d87f205b3edb640</small></div></details><details class="source" id="source-F2"><summary><b>F2</b> 操作发现与版本不兼容处理</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/sdk/python/src/future_props_lab/cli.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/sdk/python/src/future_props_lab/cli.py:99</a></div><pre>  99  def operation(client, name, capabilities):
+ 100      if name not in capabilities[&quot;operations&quot;]:
+ 101          raise ValueError(&quot;App 未开放此操作，请查看 fpl operations&quot;)
+ 102      resource, method = name.split(&quot;.&quot;, 1)
+ 103      function = getattr(getattr(client, resource, None), method, None)
+ 104      if function is None:
+ 105          raise ValueError(&quot;CLI/SDK 版本较旧，不支持此操作，请更新&quot;)
+ 106      return function
+ 107  
+ 108  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：c20e6e87b63dc186bfd81ee81e13f84db6e823c4070871a2a7e6f84cda88edf0</small></div></details><details class="source" id="source-F3"><summary><b>F3</b> 轮询仅允许 GET</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/sdk/python/src/future_props_lab/cli.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/sdk/python/src/future_props_lab/cli.py:114</a></div><pre> 114      if args.command == &quot;wait&quot;:
+ 115          if capabilities[&quot;operations&quot;][args.operation][&quot;method&quot;] != &quot;GET&quot;:
+ 116              raise ValueError(&quot;wait 只允许查询任务，不允许重复执行写操作&quot;)
+ 117          if args.timeout &lt;= 0 or args.interval &lt; 0.1:
+ 118              raise ValueError(&quot;timeout 必须为正，interval 不得小于 0.1 秒&quot;)
+ 119          deadline = time.monotonic() + args.timeout
+ 120          while True:
+ 121              result = function(**kwargs)
+ 122              data = result.model_dump() if isinstance(result, BaseModel) else result
+ 123              if not isinstance(data, dict) or &quot;status&quot; not in data:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：c20e6e87b63dc186bfd81ee81e13f84db6e823c4070871a2a7e6f84cda88edf0</small></div></details><details class="source" id="source-F4"><summary><b>F4</b> SDK 对 409 的显式处理</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/sdk/python/src/future_props_lab/client.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/sdk/python/src/future_props_lab/client.py:39</a></div><pre>  39  def _error(response):
+  40      try:
+  41          problem = response.json()
+  42      except ValueError:
+  43          problem = {&quot;code&quot;: &quot;http_error&quot;, &quot;message&quot;: response.reason_phrase}
+  44      error = ApiError(response.status_code, problem)
+  45      if response.status_code == 409 and error.code == &quot;revision_conflict&quot;:
+  46          error = RevisionConflict(response.status_code, problem)
+  47      return error
+  48  
+  49  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：3a0b4a4666efa208cb66c6f08a6d883cf8023560f284ca4d8301d3c513d2c381</small></div></details><details class="source" id="source-F5"><summary><b>F5</b> 回执重放与请求指纹</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/runtime/database/operation_receipts.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/runtime/database/operation_receipts.py:17</a></div><pre>  17  async def replay(session, *, owner_user_id, kind, resource_id, body):
+  18      row = await session.get(
+  19          ProjectOperationReceipt, (owner_user_id, kind, resource_id, body.request_id)
+  20      )
+  21      if row is None:
+  22          return None
+  23      if row.fingerprint != fingerprint(body):
+  24          raise OperationError(&quot;同一 request_id 不能用于不同操作&quot;, &quot;idempotency_conflict&quot;, 409)
+  25      return row.result
+  26  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：7499eeb218c694139a8d593a0a107f5bf996b3542435931a9e1f0817f2cbe9e9</small></div></details><details class="source" id="source-F6"><summary><b>F6</b> 先查回执，再检查版本</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/apps/visual_workshop/operations.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/apps/visual_workshop/operations.py:8</a></div><pre>   8  async def apply_operations(session, owner_user_id, project_id, body):
+   9      documents = VisualCanvasDocuments(session)
+  10      current = await documents.get(project_id)
+  11      key = dict(owner_user_id=owner_user_id, kind=&quot;visual&quot;, resource_id=project_id, body=body)
+  12      saved = await replay(session, **key)
+  13      if saved is not None:
+  14          return VisualCanvasDocumentOut.model_validate(saved)
+  15      if current.revision != body.expected_revision:
+  16          raise RevisionConflictError(
+  17              body.expected_revision, current.revision, current.model_dump(mode=&quot;json&quot;)
+  18          )
+  19      candidate = transform(current, body)
+  20      try:
+  21          result = await documents.replace(project_id, candidate)
+  22          record(session, **key, result=result)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：331932d298545303deaecd10166fda13ed780d6129bbab819ffcfc77c8a4461d</small></div></details><details class="source" id="source-F7"><summary><b>F7</b> 数据库 CAS 条件</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/apps/visual_workshop/canvas_documents.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/apps/visual_workshop/canvas_documents.py:134</a></div><pre> 134                  VisualCanvasDocument.revision == body.expected_revision,
+ 135              )
+ 136              .values(
+ 137                  edges=[edge.model_dump(mode=&quot;json&quot;) for edge in body.edges],
+ 138                  categories=categories,
+ 139                  revision=body.expected_revision + 1,
+ 140                  updated_at=now,
+ 141              )
+ 142          )
+ 143          if result.rowcount != 1:
+ 144              await self.session.rollback()
+ 145              current = await self.get(project_id)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：bf6468ccc2685f48eb4f3ea4d6e862604a4cfed88a8ca0ba049313807c34122c</small></div></details><details class="source" id="source-F8"><summary><b>F8</b> 租约过期转 unknown，不自动重派</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/runtime/tasks/native_queue.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/runtime/tasks/native_queue.py:95</a></div><pre>  95              if row.status == &quot;leased&quot; and row.lease_expires_at &lt;= now:
+  96                  await session.execute(
+  97                      update(model)
+  98                      .where(
+  99                          model.id == row.id,
+ 100                          model.status == &quot;leased&quot;,
+ 101                          model.revision == row.revision,
+ 102                          model.lease_expires_at &lt;= now,
+ 103                      )
+ 104                      .values(
+ 105                          status=&quot;unknown&quot;,
+ 106                          error_code=&quot;worker_lease_expired&quot;,
+ 107                          message=&quot;原生执行结果未确认；不会自动重派&quot;,
+ 108                          revision=model.revision + 1,
+ 109                          updated_at=now,
+ 110                      )
+ 111                  )
+ 112                  await session.commit()</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：146b30edb3d8212c5dea93a861576dd2e5740b9b2b87caf9c47cd27aaa02200a</small></div></details><details class="source" id="source-F9"><summary><b>F9</b> 执行回执受 worker 与 lease 约束</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/runtime/tasks/native_queue.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/runtime/tasks/native_queue.py:178</a></div><pre> 178      async def complete(self, *, worker_id, lease, outcome: NativeOutcome, allowed_operations):
+ 179          if lease.operation not in self.operations.intersection(allowed_operations):
+ 180              raise NativeQueueError(&quot;native_operation_forbidden&quot;)
+ 181          checksum = digest(outcome.model_dump(mode=&quot;json&quot;))
+ 182          model = self.model
+ 183          async with self.database.sessions() as session:
+ 184              bind(session, lease.owner_user_id)
+ 185              result = await session.execute(
+ 186                  update(model)
+ 187                  .where(
+ 188                      model.id == str(lease.job_id),
+ 189                      model.worker_id == worker_id,
+ 190                      model.lease_id == str(lease.lease_id),
+ 191                      model.operation == lease.operation,
+ 192                      model.outcome_sha256.is_(None),
+ 193                      model.status.in_((&quot;leased&quot;, &quot;unknown&quot;)),
+ 194                  )
+ 195                  .values(
+ 196                      status=outcome.status,
+ 197                      result=outcome.result,
+ 198                      error_code=outcome.error_code,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：146b30edb3d8212c5dea93a861576dd2e5740b9b2b87caf9c47cd27aaa02200a</small></div></details><details class="source" id="source-F10"><summary><b>F10</b> 审批等待器的进程边界</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/runtime/tasks/reactive_tools/approval.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/runtime/tasks/reactive_tools/approval.py:35</a></div><pre>  35  class ApprovalPort(Protocol):
+  36      &quot;&quot;&quot;Process-local rendezvous; the business owner authorizes and persists decisions.
+  37  
+  38      Waiters never survive restart. Cancellation and shutdown must wake them without
+  39      treating the action as approved; a replacement may not rebase a proposal&#x27;s revision.
+  40      &quot;&quot;&quot;
+  41  
+  42      async def wait(</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1fbba1953b1699c4014dd0b6fc0c0873aaf6e34fbfc585ab0816f8d3d053f6fe</small></div></details><details class="source" id="source-F11"><summary><b>F11</b> 发布审批绑定具体计划</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/apps/identity/visual_generation_approval.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/apps/identity/visual_generation_approval.py:49</a></div><pre>  49              or row.admission[&quot;plan_sha256&quot;] != body.plan_sha256
+  50          ):
+  51              raise HTTPException(404, &quot;generation_approval_not_found&quot;)
+  52          actor = Actor(**{**row.actor, &quot;scopes&quot;: tuple(row.actor[&quot;scopes&quot;])})
+  53          if not permitted(actor) or not await active_actor(session, actor):
+  54              raise HTTPException(401, &quot;source_authorization_revoked&quot;)
+  55          if row.content_sha256 is None:
+  56              row.content_sha256, row.byte_size = upload.content_sha256, upload.byte_size
+  57              await session.commit()
+  58          elif (row.content_sha256, row.byte_size) != (upload.content_sha256, upload.byte_size):
+  59              raise HTTPException(409, &quot;generation_publication_bytes_changed&quot;)
+  60      options = state.identity_options
+  61      return issue_retention(</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：c5aa205730db6c77c6b83bc580fcf1a9cddfb71243777c9521c00ffbd655c1ca</small></div></details><details class="source" id="source-F12"><summary><b>F12</b> 引用准备意图与未知结果保留</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/apps/asset_library/references/reference_changes.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/apps/asset_library/references/reference_changes.py:3</a></div><pre>   3  Only a source transaction&#x27;s durable outcome may commit or abort an intent.
+   4  Unknown outcomes keep their pins indefinitely; there is no expiry cleanup.
+   5  &quot;&quot;&quot;
+   6  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：305ae6eef010aff379ecb4c61808e94e047c3696c901f769298339af2067e842</small></div></details><details class="source" id="source-F13"><summary><b>F13</b> 批量编辑的测试用例</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/tests/integration/test_workshop_operations.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/tests/integration/test_workshop_operations.py:11</a></div><pre>  11  async def test_presentation_batch_replay_conflict_and_atomic_validation():
+  12      async with httpx.AsyncClient(
+  13          transport=httpx.ASGITransport(app=app), base_url=&quot;http://test&quot;
+  14      ) as client:
+  15          project = (
+  16              await client.post(
+  17                  &quot;/v1/presentation-workshop/projects&quot;,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：30989a7bfe9418a88f855781fe51a4dea61804a865d9bc29c01f454725b18f05</small></div></details><details class="source" id="source-F14"><summary><b>F14</b> 编辑操作保留领域约束</summary><div class="source-body"><div class="filepath"><a href="../Future-Props-Lab/backend/studio/apps/presentation_workshop/operations.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/Future-Props-Lab/backend/studio/apps/presentation_workshop/operations.py:45</a></div><pre>  45              if item[&quot;locked&quot;] and not (op.action == &quot;update&quot; and op.value == {&quot;locked&quot;: False}):
+  46                  raise OperationError(&quot;请先解锁元素&quot;, &quot;element_locked&quot;, 409)
+  47          if owner and op.entity == &quot;element&quot; and op.action == &quot;remove&quot;:
+  48              rebase_layers_after_removal(owner, {op.id})
+  49          clone = edit(items, op)
+  50          if owner and op.action == &quot;remove&quot;:
+  51              if op.entity == &quot;element&quot;:
+  52                  prune(owner, {op.id})
+  53              elif op.entity == &quot;group&quot;:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：26b5c9f0c14f0b2ec728ea8fa5002eeafd252789daf13008d36847ae98c478f1</small></div></details><details class="source" id="source-C1"><summary><b>C1</b> 草稿发布与运行快照</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/ai_service_configs/publish.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/ai_service_configs/publish.py:78</a></div><pre>  78  async def publish_bot_snapshot(
+  79      session: AsyncSession,
+  80      ai_service_config_id: str,
+  81      *,
+  82      knowledge_collection_ids: list[str] | None = None,
+  83      sync_knowledge_bindings: KnowledgeBindingSync,
+  84  ) -&gt; dict[str, Any]:
+  85      bot = await session.get(AIServiceConfig, ai_service_config_id)
+  86      if not bot:
+  87          raise ValueError(&quot;bot not found&quot;)
+  88  
+  89      spec = AIServiceConfigSpec.model_validate(bot.draft_spec)
+  90      shared_issues, _shared_collection_ids = await validate_publish_spec(
+  91          session,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：e2c41934b4d3b7a372322afa7efb6185a703d0cee8324e1b9c264ad77aae1982</small></div></details><details class="source" id="source-C2"><summary><b>C2</b> 分块策略分派</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/knowledge/indexing/parsers/naive.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/knowledge/indexing/parsers/naive.py:449</a></div><pre> 449  class NaiveParser:
+ 450      def chunk(
+ 451          self,
+ 452          filename: str,
+ 453          text: str,
+ 454          parser_config: dict[str, Any],
+ 455          *,
+ 456          raw_bytes: bytes | None = None,
+ 457      ) -&gt; list[ChunkDraft]:
+ 458          cfg = _load_config(parser_config)
+ 459          strategy = cfg.naive_options.strategy
+ 460          if strategy == &quot;one&quot;:
+ 461              return chunk_whole(text)
+ 462          if strategy == &quot;fixed&quot;:
+ 463              return chunk_fixed(text, cfg.fixed_options)
+ 464          if strategy == &quot;recursive&quot;:
+ 465              return chunk_recursive(text, cfg.recursive_options)
+ 466          return chunk_structure(text, filename, cfg.structure_options, raw_bytes=raw_bytes)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：2067d48a5b4160bd5e4be86a19a8ea1b4c3ec5864d0732379e95b1a449fd6916</small></div></details><details class="source" id="source-C3"><summary><b>C3</b> 祖先标题上下文</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/knowledge/indexing/parsers/title_chunker.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/knowledge/indexing/parsers/title_chunker.py:142</a></div><pre> 142  def _apply_ancestor_context(prefix: list[str], lines: list[str]) -&gt; str:
+ 143      if not prefix:
+ 144          return _join_lines(lines)
+ 145      if not lines:
+ 146          return _join_lines(prefix)
+ 147      merged: list[str] = []
+ 148      skip = 0
+ 149      for ln in prefix:
+ 150          if skip &lt; len(lines) and lines[skip] == ln:
+ 151              skip += 1
+ 152              merged.append(ln)
+ 153          else:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：23f1a179f0c87bf33fb6b02a2ef5475f176b5cdbaa0c38678a3178c6be516cce</small></div></details><details class="source" id="source-C4"><summary><b>C4</b> RRF 的实际公式</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/knowledge/retrieval/retrieval_strategies.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/knowledge/retrieval/retrieval_strategies.py:98</a></div><pre>  98  def reciprocal_rank_merge(
+  99      ranked_lists: list[list[str]],
+ 100      *,
+ 101      rrf_k: int,
+ 102  ) -&gt; list[str]:
+ 103      &quot;&quot;&quot;倒数排名融合（RRF）；融合各检索器已经返回的完整排名列表。&quot;&quot;&quot;
+ 104      scores: dict[str, float] = {}
+ 105      for ranked in ranked_lists:
+ 106          for rank, doc_id in enumerate(ranked, start=1):
+ 107              did = str(doc_id)
+ 108              scores[did] = scores.get(did, 0.0) + 1.0 / (rrf_k + rank)
+ 109      return sorted(scores.keys(), key=lambda i: -scores[i])</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：e169bacf335491dd1d2becd9895c049f1fa78bdfd8d6162a137b75d835c29a04</small></div></details><details class="source" id="source-C5"><summary><b>C5</b> 加权融合与 BM25 归一</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/knowledge/retrieval/retrieval_strategies.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/knowledge/retrieval/retrieval_strategies.py:438</a></div><pre> 438      max_bm25 = max((bm25_scores.get(i, 0.0) for i in candidate_ids), default=0.0) or 1.0
+ 439      scored: list[tuple[float, str]] = []
+ 440      for sid in candidate_ids:
+ 441          row = id_to_vec.get(sid)
+ 442          vec_sim = float(row[&quot;similarity&quot;]) if row else 0.0
+ 443          if vec_sim &lt; sim_threshold and sid not in bm25_ids:
+ 444              continue
+ 445          bm25_norm = bm25_scores.get(sid, 0.0) / max_bm25
+ 446          score = (1.0 - w) * bm25_norm + w * vec_sim
+ 447          scored.append((score, sid))
+ 448  
+ 449      scored.sort(key=lambda x: -x[0])
+ 450      take = [sid for _, sid in scored[: max(top_k * 3, top_k)]]
+ 451  
+ 452      missing = [sid for sid in take if sid not in id_to_vec]</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：e169bacf335491dd1d2becd9895c049f1fa78bdfd8d6162a137b75d835c29a04</small></div></details><details class="source" id="source-C6"><summary><b>C6</b> 只接受已展示且版本一致的证据</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/agents/generative_retrieval/retrieval_selection_ranges.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/agents/generative_retrieval/retrieval_selection_ranges.py:84</a></div><pre>  84      evidence = ctx.evidence_by_id.get(evidence_id)
+  85      if evidence is None or not evidence.get(&quot;observed_by_model&quot;):
+  86          return _issue(
+  87              &quot;unknown_evidence_id&quot;,
+  88              f&#x27;evidence_id=&quot;{evidence_id}&quot; 未由本轮工具返回&#x27;,
+  89              evidence_id=evidence_id,
+  90          )
+  91      document_id = str(evidence[&quot;document_id&quot;])
+  92      row = ctx.documents_by_id.get(document_id)
+  93      if row is None:
+  94          return _issue(&quot;stale_evidence&quot;, &quot;证据对应文档已不可用&quot;, evidence_id=evidence_id)
+  95      await ensure_document_content(ctx, row)
+  96      if str(row.get(&quot;content_sha256&quot;) or &quot;&quot;) != str(evidence.get(&quot;content_sha256&quot;) or &quot;&quot;):
+  97          return _issue(&quot;stale_evidence&quot;, &quot;证据对应正文已经变化&quot;, evidence_id=evidence_id)
+  98      content = str(row.get(&quot;content&quot;) or &quot;&quot;)
+  99      line_index = row.get(&quot;line_index&quot;)
+ 100      if not isinstance(line_index, LineIndex):
+ 101          return _issue(&quot;empty_range&quot;, &quot;证据正文为空&quot;, evidence_id=evidence_id)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：5ed250c9f27226e104ac681346c4a9be210fb0162aa87080b429b7b176016997</small></div></details><details class="source" id="source-C7"><summary><b>C7</b> 选区不能越过已读范围</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/agents/generative_retrieval/retrieval_selection_ranges.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/agents/generative_retrieval/retrieval_selection_ranges.py:157</a></div><pre> 157      if start &lt; int(evidence[&quot;start_offset&quot;]) or end &gt; int(evidence[&quot;end_offset&quot;]):
+ 158          evidence_start_line = int(evidence[&quot;start_line&quot;])
+ 159          evidence_end_line = int(evidence[&quot;end_line&quot;])
+ 160          is_adjacent = start_line &lt;= evidence_end_line + 1 and end_line &gt;= evidence_start_line - 1
+ 161          within_expansion_limit = start_line &gt;= max(1, evidence_start_line - 50) and end_line &lt;= min(
+ 162              line_index.line_count, evidence_end_line + 50
+ 163          )
+ 164          return _issue(
+ 165              &quot;invalid_range&quot;,
+ 166              (
+ 167                  f&quot;选择必须位于 evidence {evidence_id} 已展示的 &quot;
+ 168                  f&quot;L{evidence[&#x27;start_line&#x27;]}-L{evidence[&#x27;end_line&#x27;]} 内；&quot;</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：5ed250c9f27226e104ac681346c4a9be210fb0162aa87080b429b7b176016997</small></div></details><details class="source" id="source-C8"><summary><b>C8</b> 探索轮数与收口模型</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/agents/generative_retrieval/retrieval_harness_runtime.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/agents/generative_retrieval/retrieval_harness_runtime.py:199</a></div><pre> 199      max_exploration_rounds = opts.get(&quot;max_exploration_rounds&quot;)
+ 200      if max_exploration_rounds is None:
+ 201          max_exploration_rounds = settings.retrieval_max_tool_rounds
+ 202      adapter = get_adapter_for_model(model)
+ 203  
+ 204      harness = build_retrieval_harness(
+ 205          ctx=ctx,
+ 206          system_prompt=system_prompt,
+ 207          adapter=adapter,
+ 208          model=model,
+ 209          temperature=0,
+ 210          max_tokens=settings.retrieval_max_tokens,
+ 211          max_rounds=int(max_exploration_rounds),
+ 212          initial_observation=initial_observation,
+ 213          finalization_model=finalization_model,
+ 214      )
+ 215  
+ 216      outer_log_ctx = get_llm_call_log_context()
+ 217      async with llm_call_log_scope(
+ 218          call_source=CALL_SOURCE_KNOWLEDGE_RETRIEVAL,
+ 219          ai_service_config_id=outer_log_ctx.ai_service_config_id if outer_log_ctx else None,
+ 220          conversation_id=outer_log_ctx.conversation_id if outer_log_ctx else None,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：fb596e8ec25c685f198dc5daf25b03357d1405d984ca61edb96097d26c5f2033</small></div></details><details class="source" id="source-C9"><summary><b>C9</b> 基于原文包含关系的 L1 检索评分</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/evals/scorers/retrieval.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/evals/scorers/retrieval.py:23</a></div><pre>  23  def score_retrieval_case(
+  24      case: dict[str, Any],
+  25      hits: list[dict[str, Any]],
+  26  ) -&gt; dict[str, float | int | None]:
+  27      texts = [normalize_text(str(hit.get(&quot;text&quot;) or &quot;&quot;)) for hit in hits]
+  28      quotes = _gold_quotes(case)
+  29      answerable = bool(case.get(&quot;answerable&quot;))
+  30      if not answerable:
+  31          abstention = 1.0 if not hits else 0.0
+  32          return {
+  33              &quot;evidence_recall&quot;: None,
+  34              &quot;case_success&quot;: abstention,
+  35              &quot;evidence_precision&quot;: None,
+  36              &quot;abstention_accuracy&quot;: abstention,
+  37              &quot;gold_quote_count&quot;: 0,
+  38              &quot;hit_count&quot;: len(hits),
+  39          }
+  40  
+  41      found = [any(quote in text for text in texts) for quote in quotes]
+  42      relevant_hits = sum(1 for text in texts if any(quote in text for quote in quotes))
+  43      recall = sum(found) / len(found) if found else 0.0
+  44      precision = relevant_hits / len(texts) if texts else 0.0
+  45      return {
+  46          &quot;evidence_recall&quot;: recall,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：901b4c34c5a7b9b2358b5bd3060cd36e092c9eff913116342ef176f0db2d7cc0</small></div></details><details class="source" id="source-C10"><summary><b>C10</b> 配对 Bootstrap 区间</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/evals/scorers/retrieval.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/evals/scorers/retrieval.py:83</a></div><pre>  83  def paired_bootstrap_interval(
+  84      left_by_case: dict[str, float],
+  85      right_by_case: dict[str, float],
+  86      *,
+  87      iterations: int = 10_000,
+  88      seed: int = 20260724,
+  89  ) -&gt; dict[str, float | int]:
+  90      case_ids = sorted(set(left_by_case) &amp; set(right_by_case))
+  91      if not case_ids:
+  92          return {&quot;paired_cases&quot;: 0, &quot;delta&quot;: 0.0, &quot;ci95_low&quot;: 0.0, &quot;ci95_high&quot;: 0.0}
+  93      deltas = [left_by_case[case_id] - right_by_case[case_id] for case_id in case_ids]
+  94      rng = random.Random(seed)
+  95      samples = [mean(rng.choice(deltas) for _ in deltas) for _ in range(max(1, iterations))]
+  96      return {
+  97          &quot;paired_cases&quot;: len(case_ids),
+  98          &quot;delta&quot;: mean(deltas),
+  99          &quot;ci95_low&quot;: percentile(samples, 0.025),
+ 100          &quot;ci95_high&quot;: percentile(samples, 0.975),
+ 101      }</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：901b4c34c5a7b9b2358b5bd3060cd36e092c9eff913116342ef176f0db2d7cc0</small></div></details><details class="source" id="source-C11"><summary><b>C11</b> 先提交用户消息，再等待外部工作</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/conversations/turns/coordinator.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/conversations/turns/coordinator.py:173</a></div><pre> 173      async def checkpoint_user_message(
+ 174          self,
+ 175          message: Message | None = None,
+ 176          *,
+ 177          refresh: bool = False,
+ 178      ) -&gt; Message | None:
+ 179          &quot;&quot;&quot;Durably accept the user side of a turn before external AI work begins.&quot;&quot;&quot;
+ 180          if message is not None:
+ 181              self.session.add(message)
+ 182          await self.session.commit()
+ 183          if message is not None and refresh:
+ 184              await self.session.refresh(message)
+ 185          return message
+ 186  
+ 187      async def commit_result(
+ 188          self,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：394c3f703607cb4e9a08fa60683e5999cc058318d0dbff4ce75e456baf0d221d</small></div></details><details class="source" id="source-C12"><summary><b>C12</b> 优化字段和证据引用白名单</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/ai_service_configs/optimization/proposal.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/ai_service_configs/optimization/proposal.py:84</a></div><pre>  84      for change in proposal.changes:
+  85          if change.path not in FIELD_META or change.path not in allowed_path_set:
+  86              raise InvalidOptimizationProposalError(f&quot;unsupported proposal path: {change.path}&quot;)
+  87          if change.path in seen:
+  88              raise InvalidOptimizationProposalError(f&quot;duplicate proposal path: {change.path}&quot;)
+  89          seen.add(change.path)
+  90          for evidence in change.evidence:
+  91              allowed_message_ids = evidence_message_ids.get(evidence.conversation_id)
+  92              if allowed_message_ids is None:
+  93                  raise InvalidOptimizationProposalError(
+  94                      &quot;proposal references an unselected conversation&quot;
+  95                  )
+  96              if any(message_id not in allowed_message_ids for message_id in evidence.message_ids):
+  97                  raise InvalidOptimizationProposalError(&quot;proposal references an unknown message&quot;)
+  98          _set_value(proposed, change.path, change.new_value)
+  99          raw_changes.append(change)
+ 100  
+ 101      try:
+ 102          validated = AIServiceConfigSpec.model_validate(proposed)
+ 103      except Exception as exc:  # Pydantic preserves the precise field error for logs.</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：a21b20b93a8f2a65aec5996bdecfa525c3aacac85be79793b46c43be7a2b6860</small></div></details><details class="source" id="source-C13"><summary><b>C13</b> 应用优化时的版本检查</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/ai_service_configs/optimization/run_commands.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/ai_service_configs/optimization/run_commands.py:240</a></div><pre> 240      async def apply(
+ 241          self,
+ 242          run_id: str,
+ 243          *,
+ 244          expected_revision: int,
+ 245          expected_draft_revision: int,
+ 246          accepted_paths: list[str],
+ 247          edited_values: dict[str, Any] | None = None,
+ 248      ) -&gt; OptimizationApplyOut:
+ 249          current = await self._load(run_id)
+ 250          if int(current.revision or 0) != expected_revision:
+ 251              raise RevisionConflictError(
+ 252                  &quot;bot_optimization_run&quot;,
+ 253                  run_id,
+ 254                  expected_revision,
+ 255                  int(current.revision or 0),
+ 256                  (await _out(self._session, current)).model_dump(mode=&quot;json&quot;),
+ 257              )
+ 258          if current.status != &quot;succeeded&quot;:
+ 259              raise OptimizationRunStateError(&quot;只有已生成且未应用的方案可以应用&quot;)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：726f81fde33aaf9282410237478594d9b3a694ae0405ba837bca1cfc8b7b32cc</small></div></details><details class="source" id="source-C14"><summary><b>C14</b> 索引投影代际与重试状态</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/knowledge/indexing/chunk_runs/projections.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/knowledge/indexing/chunk_runs/projections.py:95</a></div><pre>  95              projection.generation = int(projection.generation or 0) + 1
+  96          projection.chunk_revision = chunk_revision
+  97          projection.desired_state = desired_state
+  98          projection.status = DurableStatus.pending.value
+  99          projection.error_message = &quot;&quot;
+ 100          projection.attempt_count = 0
+ 101          projection.lease_token = None
+ 102          projection.lease_expires_at = None
+ 103          projection.next_attempt_at = None
+ 104          projection.updated_at = utc_now()
+ 105          count += 1
+ 106      if count:
+ 107          await session.flush()
+ 108          request_wakeup_after_commit(session, DurableWakeupTopic.CHUNK_PROJECTION)
+ 109      return count</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：8d1526e51be7f00d0e5a17a2f603d9070769fdde6e71c0bb68616cc25bfe73b7</small></div></details><details class="source" id="source-C15"><summary><b>C15</b> 当前单后端实例约束</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/core/process_lock.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/core/process_lock.py:37</a></div><pre>  37  async def acquire_process_lock(database_url: str) -&gt; PostgreSQLProcessLock:
+  38      connection = await psycopg.AsyncConnection.connect(
+  39          psycopg_url(database_url),
+  40          autocommit=True,
+  41          application_name=&quot;ai-customer-singleton&quot;,
+  42      )
+  43      try:
+  44          row = await (
+  45              await connection.execute(
+  46                  &quot;SELECT pg_try_advisory_lock(%s, %s)&quot;,
+  47                  (_LOCK_NAMESPACE, _LOCK_RESOURCE),
+  48              )
+  49          ).fetchone()
+  50          if not row or not bool(row[0]):
+  51              raise ProcessLockError(
+  52                  &quot;Another AI 客服中台 backend or database migration is using this database. &quot;
+  53                  &quot;The PostgreSQL cutover phase supports exactly one backend instance.&quot;
+  54              )
+  55          return PostgreSQLProcessLock(connection)
+  56      except BaseException:
+  57          await connection.close()
+  58          raise</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：aafef8023a1bb5195cbadf4dcd0671cdeccab4cacdf34a84d34c35d7b0a2b762</small></div></details><details class="source" id="source-C16"><summary><b>C16</b> 服务端打断确认与回合结算</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/agents/customer/voice/turn_runtime.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/agents/customer/voice/turn_runtime.py:66</a></div><pre>  66      async def confirm_server_interrupt(self, turn_id: str | None) -&gt; bool:
+  67          state = self.state
+  68          normalized_turn_id = str(turn_id or &quot;&quot;).strip()
+  69          if (
+  70              not normalized_turn_id
+  71              or normalized_turn_id != state.active_voice_turn_id
+  72              or normalized_turn_id in state.settled_voice_turn_ids
+  73              or normalized_turn_id in state.playback_done_turn_ids
+  74          ):
+  75              return False
+  76          state.bridge.interrupt_current_turn(normalized_turn_id)
+  77          state.cancelled_voice_turn_ids.add(normalized_turn_id)
+  78          state.settled_voice_turn_ids.add(normalized_turn_id)
+  79          await settle_interrupted_turn(
+  80              state=state,
+  81              tools=self.tools,
+  82              metrics=self.metrics,
+  83              turn_id=normalized_turn_id,
+  84              interrupt_source=&quot;server_vad&quot;,
+  85          )
+  86          state.playback_open_turn_ids.discard(normalized_turn_id)
+  87          await state.send_event({&quot;type&quot;: &quot;interrupt&quot;, &quot;turn_id&quot;: normalized_turn_id})
+  88          state.active_voice_turn_id = None</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：b9c834de4ba098e7a03341e3c90eb7c9c9e3dc04ff0ad30eee485d4d7c6066fe</small></div></details><details class="source" id="source-C17"><summary><b>C17</b> 可疑打断的前端恢复状态</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/web/src/features/deployment/embed/voiceEvents.ts" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/web/src/features/deployment/embed/voiceEvents.ts:309</a></div><pre> 309      onPossibleFalseInterrupt: function () {
+ 310        V.playbackPhase = &quot;possible_false_interrupt&quot;;
+ 311        V.presentationState = AiCustomerEmbedRuntime.reduceVoicePresentationState(V.presentationState, {
+ 312          type: &quot;playback&quot;,
+ 313          phase: &quot;possible_false_interrupt&quot;,
+ 314        });
+ 315        if (voiceEq) voiceEq.style.display = &quot;none&quot;;
+ 316        const playbackBubble: any = V.turn &amp;&amp; V.turn.bubble ? V.turn.bubble : V.playbackBubble;
+ 317        if (playbackBubble) {
+ 318          V.playbackBubble = playbackBubble;
+ 319          setBubbleReplyStatus(playbackBubble, &quot;possible_false_interrupt&quot;);
+ 320        }
+ 321      },</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：01a8881e92dc0d50d501bf14dd08a4f96c98f3a726437293614d4a74bd317948</small></div></details><details class="source" id="source-C18"><summary><b>C18</b> 转人工期间阻止 AI 抢答的持久标记</summary><div class="source-body"><div class="filepath"><a href="../AI-customer/backend/app/agents/customer/text/handoff_gate.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/AI-customer/backend/app/agents/customer/text/handoff_gate.py:20</a></div><pre>  20  async def settle_handoff_blocked_turn(
+  21      coordinator: CustomerTurnCoordinator,
+  22      *,
+  23      user_message_id: str,
+  24      handoff_status: str,
+  25      workflow_state: dict[str, Any] | None,
+  26  ) -&gt; Message | None:
+  27      &quot;&quot;&quot;Persist an idempotency sentinel without exposing a fake assistant bubble.&quot;&quot;&quot;
+  28      meta = build_assistant_message_meta(
+  29          intent=&quot;handoff_active&quot;,
+  30          handoff_suggested=False,
+  31          citations=[],
+  32          handoff_status=handoff_status,
+  33          workflow_state=workflow_state,
+  34          reply_status=REPLY_STATUS_STOPPED,
+  35          reply_status_reason=&quot;handoff&quot;,
+  36      )
+  37      meta.update(actor=HANDOFF_GATE_ACTOR, turn_status=HANDOFF_GATE_TURN_STATUS)
+  38      return await coordinator.commit_result(
+  39          AssistantTurnWrite(
+  40              content=&quot;&quot;,
+  41              meta=meta,</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：ab7cfedcec20af6682d10006b58c57b8b11231ec7b2bc8674707b005465835f8</small></div></details><details class="source" id="source-P1"><summary><b>P1</b> 重建单页入口</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2659</a></div><pre>2659      def process_single_page(
+2660          self, 
+2661          image_path: str, 
+2662          record_id: str,
+2663          override: bool = False,
+2664          retries: int = 3
+2665      ):
+2666          &quot;&quot;&quot;处理单页图像，生成对应的幻灯片&quot;&quot;&quot;
+2667          page_name = Path(image_path).stem
+2668          
+2669          # 截断过长的page_name，避免路径过长（保留前50个字符）
+2670          if len(page_name) &gt; 50:
+2671              original_page_name = page_name
+2672              page_name = page_name[:50]
+2673              logger.debug(f&quot;页面名称过长，已截断: {original_page_name} -&gt; {page_name}&quot;)
+2674          
+2675          logger.info(f&quot;=== 处理页面: {os.path.basename(image_path)} ===&quot;)
+2676          </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P2"><summary><b>P2</b> 背景修复与遮罩参数</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2732</a></div><pre>2732                  mode=&quot;lama&quot;,
+2733                  labeled_image_path=labeled_image_path,
+2734                  dilate_config=(0, 0.01, 0.02, 0, True),
+2735                  repair_iterations=1,
+2736                  label_sets=[list(self.config.TEXT_LABELS.keys()), list(self.config.VISUAL_LABELS.keys())]
+2737              )
+2738              logger.info(f&quot;擦除元素生成背景图完成&quot;)
+2739          else:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P3"><summary><b>P3</b> 样式提取并发与按元素归集</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:1891</a></div><pre>1891                          max_workers=5,
+1892                          return_results=True
+1893                      )
+1894                  
+1895                  id_to_result = {}
+1896                  for result in extract_results:
+1897                      if result is not None:
+1898                          element_id, slide_text_box_dict = result
+1899                          id_to_result[element_id] = slide_text_box_dict
+1900                  
+1901                  sorted_results = []
+1902                  for element_id in element_ids:
+1903                      if element_id in id_to_result:
+1904                          missing_ids = id_to_result[element_id].get(&#x27;missing_ids&#x27;, [])
+1905                          if len(missing_ids) &gt; 0:
+1906                              # 输出缺失的id
+1907                              logger.info(f&quot;元素 {element_id} 存在缺失的文本框id: {missing_ids}&quot;)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P4"><summary><b>P4</b> 按层级还原前后遮挡</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2569</a></div><pre>2569          all_boxes.sort(key=lambda x: x[&#x27;layer&#x27;])
+2570  
+2571          count = 0
+2572          for box_info in all_boxes:
+2573              item = box_info[&#x27;item&#x27;]
+2574              label = box_info[&#x27;label&#x27;]
+2575              x1, y1, x2, y2 = box_info[&#x27;x1&#x27;], box_info[&#x27;y1&#x27;], box_info[&#x27;x2&#x27;], box_info[&#x27;y2&#x27;]
+2576              box_w = x2 - x1
+2577              box_h = y2 - y1
+2578              if box_w &lt;= 0 or box_h &lt;= 0:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P5"><summary><b>P5</b> 识别失败回退图片</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2603</a></div><pre>2603                  if not has_text_content:
+2604                      crop_img = self._process_image_element(original_img, box_info, all_boxes, background_img_array)
+2605                      image_stream = BytesIO()
+2606                      crop_img.save(image_stream, format=&#x27;PNG&#x27;)
+2607                      image_stream.seek(0)
+2608                      try:
+2609                          pic = slide.shapes.add_picture(image_stream, left, top, width, height)
+2610                          pic.name = f&quot;{label}_{count}&quot;
+2611                      except Exception as e:
+2612                          logger.error(f&quot;Failed to add image block {label}: {e}&quot;)
+2613                  else:
+2614                      # 应用文本框宽度扩展比例，避免文字自动换行
+2615                      expanded_width = Emu(int(width + width * config.TEXTBOX_WIDTH_EXPAND_RATIO))
+2616                      txBox = slide.shapes.add_textbox(left, top, expanded_width, height)
+2617                      tf = txBox.text_frame
+2618                      tf.word_wrap = True
+2619                      txBox.fill.background()
+2620                      # 在应用样式之前，归一化字体大小
+2621                      self.normalize_run_font_sizes(style_data, threshold=2.0)
+2622                      self._apply_textbox_style(txBox, style_data)</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P6"><summary><b>P6</b> 搜索文本被传入图片链</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2861</a></div><pre>2861              extra_info=extra_info_md,
+2862              override=override,
+2863              retries=retries
+2864          )
+2865          if None in slides_image_results:
+2866              raise ValueError(f&quot;✗ 生成幻灯片图片失败: {slides_image_results}&quot;)
+2867          
+2868          # 3. 将图片拼接成PDF</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P7"><summary><b>P7</b> 大纲调用当前只传 prompt</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2947</a></div><pre>2947              slide_outline_res = slide_outline_agent.call_llm_detailed(
+2948                  prompt=prompt,
+2949                  retries=retries
+2950              )
+2951  
+2952              if slide_outline_res.get(&#x27;status&#x27;) != &#x27;success&#x27;:
+2953                  error_msg = f&quot;&quot;&quot;
+2954  生成幻灯片大纲失败！</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P8"><summary><b>P8</b> 结构向量限制</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/sub_template_match.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/sub_template_match.py:40</a></div><pre>  40  MAX_CHILD = 6
+  41  MAX_DEPTH = 4
+  42  
+  43  # =======================
+  44  # 节点编码
+  45  # =======================
+  46  def encode_node(node, nonleaf_weight=5, leaf_weight=5):
+  47      if node is None:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：7c1a98e5de7cbf4b5fc4c635a716c968912ffda2cadb3ccb527776c584827854</small></div></details><details class="source" id="source-P9"><summary><b>P9</b> 递归编码、深度衰减及排序</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/sub_template_match.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/sub_template_match.py:67</a></div><pre>  67  def tree_to_vector(node, depth=0, decay=0.8, nonleaf_weight=5, leaf_weight=5):
+  68      &quot;&quot;&quot;
+  69      将树编码为向量，深度越深贡献越小
+  70      decay: 每层衰减比例（0~1），越小越快衰减
+  71      &quot;&quot;&quot;
+  72      if depth &gt;= MAX_DEPTH:
+  73          return np.array([])
+  74  
+  75      # 当前节点编码
+  76      vec = np.array(encode_node(node, nonleaf_weight, leaf_weight), dtype=float)
+  77      
+  78      # 对当前节点数值做深度衰减
+  79      vec = vec * (decay ** depth)
+  80  
+  81      # 子节点
+  82      children = []
+  83      if node is not None and &#x27;children&#x27; in node and node[&#x27;children&#x27;]:
+  84          # 排序保证无序一致性
+  85          children = sorted(
+  86              node[&#x27;children&#x27;],
+  87              key=lambda x: leaf_type_mapping.get(x[&#x27;type&#x27;], 0)
+  88              if &#x27;children&#x27; not in x or not x[&#x27;children&#x27;] else nonleaf_type_mapping.get(x[&#x27;type&#x27;], 0)
+  89          )
+  90  
+  91      # 遍历 MAX_CHILD 个位置
+  92      for i in range(MAX_CHILD):
+  93          if i &lt; len(children):
+  94              child_vec = tree_to_vector(children[i], depth+1, decay, nonleaf_weight, leaf_weight)
+  95          else:
+  96              child_vec = tree_to_vector(None, depth+1, decay, nonleaf_weight, leaf_weight)
+  97          vec = np.concatenate([vec, child_vec])
+  98  
+  99      return vec</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：7c1a98e5de7cbf4b5fc4c635a716c968912ffda2cadb3ccb527776c584827854</small></div></details><details class="source" id="source-P10"><summary><b>P10</b> 模型选择模板及序号校验</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/ppt_page_match/structure_match_llm.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/ppt_page_match/structure_match_llm.py:64</a></div><pre>  64  def structure_match_by_text(ppt_structure_path_list: list[str], content_structure_text: str) -&gt; str:
+  65      try:
+  66          ppt_structure_str_list = &quot;&quot;
+  67          for i, ppt_structure_path in enumerate(ppt_structure_path_list):
+  68              ppt_structure_str = json.dumps(json.load(open(ppt_structure_path, &quot;r&quot;, encoding=&quot;utf-8&quot;)))
+  69              ppt_structure_str_list += f&quot;{i+1}. {ppt_structure_str}\n&quot;
+  70          if isinstance(content_structure_text, dict):
+  71              content_structure_text = json.dumps(content_structure_text, ensure_ascii=False)
+  72          content_structure = content_structure_text
+  73          prompt = PROMPT.format(ppt_structure_str_list=ppt_structure_str_list, content_structure=content_structure)
+  74  
+  75          client = LLMProviderClient(api_key=API_KEY, model=DECODE_MODEL)
+  76          res = client.complete(
+  77              text=prompt,
+  78          )
+  79          res = res.replace(&quot;```json&quot;, &quot;&quot;).replace(&quot;```&quot;, &quot;&quot;).strip()
+  80          print(f&quot;原始匹配结果：{res}&quot;)
+  81          template_index = json.loads(res)[&quot;template_index&quot;]
+  82          if template_index &lt;= 0 or template_index &gt; len(ppt_structure_path_list):
+  83              raise ValueError(f&quot;模板序号 {template_index} 超出范围&quot;)
+  84          template_id = ppt_structure_path_list[template_index - 1]   # 返回模板文件名
+  85          return template_id
+  86      except Exception as e:
+  87          print(f&quot;匹配语料 {content_structure_text} 失败: {e}&quot;)
+  88          raise e
+  89  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：6a9af15ac8c028420e45f0961eca814e9f89b9f4395db80962168b47380888c8</small></div></details><details class="source" id="source-P11"><summary><b>P11</b> HTML 模板生成入口</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/modules.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/modules.py:531</a></div><pre> 531  def html_converter(
+ 532      prompt: str = &quot;&quot;,
+ 533      llm_config: LLMConfig = llm_config_dict[&quot;claude-opus-4-20250514&quot;],
+ 534      # llm_config: LLMConfig = llm_config_dict[&quot;gpt-4o&quot;],
+ 535      img_path_list: list = None,
+ 536      slide_size: tuple = (1280, 720),
+ 537      mode: HtmlGeneratorMode = HtmlGeneratorMode.IMAGE_TO_HTML,
+ 538      stream: bool = False,
+ 539      retries: int = 3,
+ 540      **kwargs
+ 541  ):
+ 542      &quot;&quot;&quot;
+ 543      mode (required): 转换模式
+ 544      转换html，支持：
+ 545      1. 支持图像九宫格转 htmls 模板
+ 546          img_path_list (required)
+ 547      2. 支持图像直接转 html 模板
+ 548          img_path_list (required)
+ 549      3. 支持 语料+图像 转 html
+ 550          prompt (required)
+ 551          img_path_list (required)
+ 552      3. 支持 语料+html 模板 转 html 
+ 553          prompt (required)
+ 554          template_html_route (required)
+ 555      &quot;&quot;&quot;</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：b28d7b113b20fdd6ae14fa04998fc78ee6bbcc6c7b177d278b9b590275aa9fa4</small></div></details><details class="source" id="source-P12"><summary><b>P12</b> 浏览器批量页面操作</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/slidefix.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/slidefix.py:231</a></div><pre> 231  def execute_func_on_pages(func: Callable[[Page], Any], pages: List[str], headless: bool = True):
+ 232      multi_page_service = service_init(headless=headless)
+ 233      try:
+ 234          multi_page_service.open_pages(pages)
+ 235          results = multi_page_service.execute_on_all_pages(func)
+ 236          # 在&lt;页面名称上&gt;执行了func
+ 237          print(f&quot;✅在&lt;{pages[0]}&gt;成功执行了func，execute_func_on_pages 返回: {results[0]}&quot;)
+ 238          return results
+ 239      finally:
+ 240          # multi_page_service.close_all_pages()
+ 241          multi_page_service.browser_service.close()
+ 242      
+ 243  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：9a4c323cf597b56222d0b417a69c25d5e1e4d0856f48adb5bbaec6da7e46ac81</small></div></details><details class="source" id="source-P13"><summary><b>P13</b> 提交并发、输入顺序收集结果</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/utils/concurrency.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/utils/concurrency.py:77</a></div><pre>  77                  for future in tqdm(futures, desc=&quot;执行任务&quot;):
+  78                      try:
+  79                          results.append(future.result(timeout=timeout))
+  80                      except Exception as e:
+  81                          logger.error(f&quot;任务执行失败: {e}&quot;)
+  82                          logger.error(traceback.format_exc())
+  83                          results.append(None)
+  84                  return results
+  85              else:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：da66e5803e3ceab7304b82fca5f370afab0abff66bdb2300e338f708d1b9e348</small></div></details><details class="source" id="source-P14"><summary><b>P14</b> 进程内任务管理器及历史加载</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/backend/services/task_manager.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/backend/services/task_manager.py:241</a></div><pre> 241          self._tasks: Dict[str, Task] = {}
+ 242          self._executor = ThreadPoolExecutor(max_workers=2)
+ 243          self._initialized = True
+ 244          
+ 245          # 启动时加载历史任务
+ 246          self._load_history_tasks()
+ 247      
+ 248      def _load_history_tasks(self):
+ 249          &quot;&quot;&quot;从磁盘加载历史任务记录&quot;&quot;&quot;
+ 250          outputs_dir = BASE_DIR / &quot;data&quot; / &quot;api_outputs&quot;</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：bcffa27fa9774e42f2d9c87b3a601bdfdb679bbbb8c4d4199498c540ac3847c8</small></div></details><details class="source" id="source-P15"><summary><b>P15</b> 像素坐标到 EMU</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/pipelines/generate_pptx_ocr_chain.py:2009</a></div><pre>2009      def _pixels_to_emu_xy(self, pixels_x: float, pixels_y: float) -&gt; tuple:
+2010          &quot;&quot;&quot;将像素坐标转换为EMU单位&quot;&quot;&quot;
+2011          emu_x = int(round(pixels_x * self.scale_x * 914400))
+2012          emu_y = int(round(pixels_y * self.scale_y * 914400))
+2013          return (emu_x, emu_y)
+2014      
+2015      def _has_text_content(self, style_data: Dict) -&gt; bool:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：1a1dce8d45a8d9d20596067f0feceee5476df87e03511f6c9574776c10b1c8cc</small></div></details><details class="source" id="source-P16"><summary><b>P16</b> 重建对象的结构化 schema</summary><div class="source-body"><div class="filepath"><a href="../ppt-pipeline/src/type/python_pptx.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/ppt-pipeline/src/type/python_pptx.py:87</a></div><pre>  87  class SlideTextBox(BaseModel):
+  88      id: str
+  89      # Fill 是可选的，因为提示词中提到无填充可能为 null 或不输出
+  90      fill: Optional[ShapeFill] = None 
+  91      layer: int = Field(..., description=&quot;图层编号&quot;)
+  92      text_frame: TextFrame
+  93  
+  94  class SlideImageBox(BaseModel):
+  95      id: str
+  96      layer: int = Field(..., description=&quot;图层编号&quot;)
+  97  
+  98  SlideBox = Union[SlideTextBox, SlideImageBox]
+  99  
+ 100  # --- 4. 列表容器 (List Container) ---
+ 101  # 用于解析最外层的 List[...]</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：cbe14aa08b5466ddc61fb94e47bd1116cbc3c5c57a60d18f864697291212fd6b</small></div></details><details class="source" id="source-N1"><summary><b>N1</b> 历史对话与搜索配置</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/parse_search_params.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/parse_search_params.py:15</a></div><pre>  15  def main(user_input: str, all_history: str, search_type: str):
+  16      search_handlers = {
+  17          &#x27;webSearch&#x27;: {
+  18              &#x27;activeEngines&#x27;: [],
+  19              &#x27;rerank&#x27;: True,
+  20              &#x27;rerankThreshold&#x27;: 0,
+  21              &#x27;searchWeb&#x27;: True,
+  22              &#x27;summarizer&#x27;: True,
+  23          },
+  24          &#x27;academicSearch&#x27;: {
+  25              &#x27;activeEngines&#x27;: [],
+  26              &#x27;rerank&#x27;: True,
+  27              &#x27;rerankThreshold&#x27;: 0,
+  28              &#x27;searchWeb&#x27;: True,
+  29              &#x27;summarizer&#x27;: False,
+  30          },
+  31          &#x27;writingAssistant&#x27;: {
+  32              &#x27;activeEngines&#x27;: [],</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：2dcd6ea512906dd84b6d72e593a2794bb8b791d6d833c9bc948af9f4327d7074</small></div></details><details class="source" id="source-N2"><summary><b>N2</b> 搜索类型白名单</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/check_search_type.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/check_search_type.py:2</a></div><pre>   2  def main(search_type):
+   3      search_type_is_valid = 0
+   4      if search_type and search_type in [&quot;webSearch&quot;, &quot;academicSearch&quot;, &quot;scienceSearch&quot;, &quot;videoSearch&quot;, &quot;socialSearch&quot;]:
+   5          search_type_is_valid = 1
+   6  
+   7      return {
+   8          &quot;search_type_is_valid&quot;: search_type_is_valid
+   9      }</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：0f8c7725e3ee4c46cec15532653450e99f6dc6d3918f43f7ae85659e839d2ec9</small></div></details><details class="source" id="source-N3"><summary><b>N3</b> 向量相似度过滤排序</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/rerank_docs_balanced.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/rerank_docs_balanced.py:102</a></div><pre> 102          similarity = [
+ 103              {&#x27;index&#x27;: i, &#x27;similarity&#x27;: compute_similarity(query_embedding, doc_embedding)}
+ 104              for i, doc_embedding in enumerate(sorted_doc_embeddings)
+ 105          ]
+ 106  
+ 107          # 排序并返回前 15 个文档
+ 108          sorted_docs = sorted(
+ 109              [sim for sim in similarity if sim[&#x27;similarity&#x27;] &gt; (self.config.get(&#x27;rerankThreshold&#x27;, 0.3))],
+ 110              key=lambda x: x[&#x27;similarity&#x27;],
+ 111              reverse=True
+ 112          )[:15]
+ 113  
+ 114          return [docs_with_content[sim[&#x27;index&#x27;]] for sim in sorted_docs]</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：631202ab00d51c8ac9fa45183acd7519368895ff365af16b0a0d39039417aeb7</small></div></details><details class="source" id="source-N4"><summary><b>N4</b> 正文过滤与 embedding 对齐风险</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/rerank_docs_balanced.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/rerank_docs_balanced.py:90</a></div><pre>  90          docs_with_content = [doc for doc in docs if doc[&quot;page_content&quot;] and len(doc[&quot;page_content&quot;]) &gt; 0]
+  91  
+  92          # 获取文档的嵌入向量
+  93  
+  94          # 合并文件数据
+  95          # docs_with_content.extend([
+  96          #     Document(page_content=file_data[&#x27;content&#x27;], metadata={&#x27;title&#x27;: file_data[&#x27;fileName&#x27;], &#x27;url&#x27;: &#x27;File&#x27;})</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：631202ab00d51c8ac9fa45183acd7519368895ff365af16b0a0d39039417aeb7</small></div></details><details class="source" id="source-N5"><summary><b>N5</b> 快速模式保留原序前 15 条</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/rerank_docs_speed.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/rerank_docs_speed.py:68</a></div><pre>  68          return docs_with_content[:15]
+  69  def main(docs: str, config: str):
+  70      config = json.loads(config)
+  71      rerankDocs = RerankDocs(config)
+  72  
+  73      res_docs = rerankDocs.rerank_docs(
+  74          docs=json.loads(docs)
+  75      )
+  76  
+  77      return {</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：83340642fcb81680f7d446b9cef5474da224f906acb104ab793f944a3f087ddf</small></div></details><details class="source" id="source-N6"><summary><b>N6</b> 资料整理为带编号的上下文</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/parse_summary_params.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/parse_summary_params.py:14</a></div><pre>  14  def main(docs: str, search_type: str, ai_name:str) -&gt; dict:
+  15  
+  16      processed_docs = process_docs(json.loads(docs)) if docs else &quot;&quot;
+  17  
+  18      summary_template_ori = Template(&quot;&quot;&quot;
+  19  You are {{name}}, an AI model skilled in web search and crafting detailed, engaging, and well-structured answers. You excel at summarizing web pages and extracting relevant information to create professional, blog-style responses.</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：e014e3adfa2bfb192c8bbef2de73f9e60b33747194a23d4822d1ab433ee636c2</small></div></details><details class="source" id="source-N7"><summary><b>N7</b> XML 输出协议存在于提示词</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/笔记AI助手-智能搜索/search_system_prompt.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/笔记AI助手-智能搜索/search_system_prompt.py:3</a></div><pre>   3  Outputs are formatted using a custom XML syntax. You must output valid XML only, closely following the spec below. Do not output any markdown or HTML formatting except inside of &lt;code&gt; or &lt;code-block&gt;.
+   4  You may output multiple XML commands. Output as many as needed to complete the user&#x27;s request.
+   5  The user may ask to perform a task that is not technically possible to achieve by using your allowed XML APIs.
+   6  
+   7  Here are some examples:</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：0401023d690612b814482536c27843b1e6502d604d80f176d1e7baa3525ff242</small></div></details><details class="source" id="source-N8"><summary><b>N8</b> 语雀正文解析仍为占位</summary><div class="source-body"><div class="filepath"><a href="../projects/dataParse/yuque.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/dataParse/yuque.py:37</a></div><pre>  37      def parseDoc(self, doc_id):
+  38          &quot;&quot;&quot;
+  39          解析文档信息
+  40          :param doc_path:
+  41          :return:
+  42          &quot;&quot;&quot;
+  43          doc_path = os.path.join(self.root_dir, doc_id + &quot;.json&quot;)
+  44          doc_json = YuqueParse.read_json_file(doc_path)
+  45          pass
+  46  </pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：eee675a540139d7eee15aaea9352175fdf908ced6c46e2dcfef254417ab4e13e</small></div></details><details class="source" id="source-N9"><summary><b>N9</b> Dify 并行向量节点</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/笔记AI助手-智能搜索-工具.yml" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/笔记AI助手-智能搜索-工具.yml:1372</a></div><pre>1372          is_parallel: true
+1373          iterator_selector:
+1374          - &#x27;1735625106438&#x27;
+1375          - docs_list
+1376          output_selector:
+1377          - &#x27;1735627601855&#x27;
+1378          - doc_embedding
+1379          output_type: array[string]
+1380          parallel_nums: 10
+1381          selected: false
+1382          start_node_id: 1735626108617start
+1383          title: 迭代
+1384          type: iteration
+1385          width: 388</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：b0a2bd40a318346400122672321ca8b16b14f7351a7a5977379118f976b12da4</small></div></details><details class="source" id="source-N10"><summary><b>N10</b> 学术摘要与网页资料统一</summary><div class="source-body"><div class="filepath"><a href="../projects/perplexity_dify/fetch_docs.py" title="从本地文件打开；行号显示在路径后">/Users/tonghao/Projects/projects/perplexity_dify/fetch_docs.py:44</a></div><pre>  44      if search_type == &#x27;academicSearch&#x27;:
+  45          parsed_articles = parse_articles(searxng_json_str)
+  46          documents = [
+  47              Document(
+  48                  page_content=json.dumps(article[&quot;Summary&quot;], ensure_ascii=False),  # 这应该是 res.content
+  49                  metadata={
+  50                      &quot;title&quot;: article[&quot;Title&quot;],
+  51                      &quot;published&quot;: article[&quot;Published&quot;],
+  52                      &quot;authors&quot;: article[&quot;Authors&quot;],
+  53                  }
+  54              ).to_dict()
+  55              for article in parsed_articles
+  56          ]
+  57          documents = documents[:5]
+  58      else:
+  59          searxng_json = json.loads(searxng_json_str)
+  60          documents = [
+  61              Document(
+  62                  page_content=result.get(&quot;content&quot;, result.get(&quot;title&quot;, &quot;&quot;)),  # 这应该是 res.content
+  63                  metadata={</pre><small>静态摘录，仅用于定位与解释。已读取当前工作树；完整文件 SHA-256：30af81be3baff93dac9ab2bd42b3be25c7ef59c04d1ee62e1dbbf362269dacbc</small></div></details><details class="source" id="source-W1"><summary><b>W1</b> GRPO 原始论文（2024）</summary><div class="source-body"><div class="filepath"><a href="https://arxiv.org/html/2402.03300v3#S4.SS1" target="_blank" rel="noopener">阅读原始论文 ↗</a></div><pre>原始 GRPO 使用同一问题下多个采样结果的组内相对奖励估计优势，省去单独的价值模型；目标含裁剪策略比和参考策略 KL 约束。</pre><small>静态摘录，仅用于定位与解释。理论资料；不证明本人训练配置。</small></div></details><details class="source" id="source-W2"><summary><b>W2</b> RRF 的多路融合场景与参数（官方文档）</summary><div class="source-body"><div class="filepath"><a href="https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion" target="_blank" rel="noopener">阅读原始论文 ↗</a></div><pre>RRF 将使用不同相关性指标的多份排序结果合并。官方示例组合关键词检索与 kNN，按名次而非原始分数累加；rank_constant 与每路候选窗口分别控制名次贡献和候选范围。多查询的教学场景是据融合机制给出的设计示例，不代表本项目已接入该能力。</pre><small>静态摘录，仅用于定位与解释。理论资料；不证明本人训练配置。</small></div></details></section>
+<footer class="footer"><span>童浩 · 项目面试准备手册 · 54 题</span><a href="#">回到顶部 ↑</a></footer></main></div><div class="toast" id="toast" role="status" aria-live="polite" hidden></div><script>
+(()=>{
+ 'use strict';
+ const cards=[...document.querySelectorAll('.question')], search=document.querySelector('#search'), select=document.querySelector('#project');
+ const must=document.querySelector('#must'), gaps=document.querySelector('#gaps'), unlearned=document.querySelector('#unlearned');
+ const savedKey='tonghao-interview-20261112-v1'; let state={mastered:{},notes:{}};
+ try{const v=JSON.parse(localStorage.getItem(savedKey)||'null');if(v&&v.mastered&&v.notes)state=v;}catch(e){}
+ const save=()=>{try{localStorage.setItem(savedKey,JSON.stringify(state));}catch(e){notify('当前浏览器不允许保存，页面仍可正常阅读。');}};
+ let toastTimer;function notify(msg){const t=document.querySelector('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,2800);}
+ function progress(){const n=Object.values(state.mastered).filter(Boolean).length;document.querySelector('#progressText').textContent=`已掌握 ${n} / ${cards.length}`;document.querySelector('#progressBar').style.width=`${n/cards.length*100}%`;}
+ function filter(){const terms=search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);let n=0;cards.forEach(c=>{const text=c.textContent.toLocaleLowerCase();const keep=(!select.value||c.dataset.group===select.value)&&(!must.classList.contains('active')||c.dataset.priority==='必会')&&(!gaps.classList.contains('active')||c.dataset.gap==='true')&&(!unlearned.classList.contains('active')||!state.mastered[c.id])&&terms.every(x=>text.includes(x));c.hidden=!keep;if(keep)n++;});document.querySelectorAll('[data-section]').forEach(s=>s.hidden=![...s.querySelectorAll('.question')].some(c=>!c.hidden));document.querySelector('#resultCount').textContent=`显示 ${n} / ${cards.length} 题`;document.querySelector('#empty').hidden=n!==0;document.querySelector('#random').disabled=n===0;}
+ search.addEventListener('input',filter);select.addEventListener('change',filter);
+ [must,gaps,unlearned].forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('active');b.setAttribute('aria-pressed',String(b.classList.contains('active')));filter();}));
+ document.querySelector('#reset').addEventListener('click',()=>{search.value='';select.value='';[must,gaps,unlearned].forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});filter();});
+ document.querySelector('#expand').addEventListener('click',()=>cards.filter(c=>!c.hidden).forEach(c=>c.querySelector('.qa').open=true));
+ document.querySelector('#collapse').addEventListener('click',()=>cards.forEach(c=>c.querySelector('.qa').open=false));
+ document.querySelector('#random').addEventListener('click',()=>{const pool=cards.filter(c=>!c.hidden);if(!pool.length)return;cards.forEach(c=>{c.classList.remove('selected');c.querySelector('.qa').open=false;});const c=pool[Math.floor(Math.random()*pool.length)];c.classList.add('selected');c.scrollIntoView({behavior:'smooth',block:'start'});c.querySelector('summary').focus({preventScroll:true});notify(`抽到 ${c.id}，先口述，再展开答案。`);});
+ document.querySelectorAll('[data-master]').forEach(el=>{el.checked=!!state.mastered[el.dataset.master];el.addEventListener('change',()=>{state.mastered[el.dataset.master]=el.checked;save();progress();filter();});});
+ document.querySelectorAll('[data-note]').forEach(el=>{el.value=state.notes[el.dataset.note]||'';el.addEventListener('input',()=>{state.notes[el.dataset.note]=el.value;save();});});
+ document.querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',async()=>{const text=document.getElementById(el.dataset.copy).querySelector('.oral').textContent;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}else{const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();if(!document.execCommand('copy'))throw Error('copy unavailable');area.remove();}notify('已复制口述稿。');}catch(e){notify('浏览器未允许复制，请手动选择口述稿文本。');}}));
+ function revealSource(id){const d=document.getElementById('source-'+id);if(d)d.open=true;}
+ document.querySelectorAll('[data-source]').forEach(a=>a.addEventListener('click',()=>revealSource(a.dataset.source)));
+ document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',()=>{search.value='';select.value='';[must,gaps,unlearned].forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});filter();}));
+ function hash(){if(location.hash.startsWith('#source-'))revealSource(location.hash.slice(8));const c=document.querySelector('.question'+location.hash);if(c){if(c.hidden){document.querySelector('#reset').click();}c.querySelector('.qa').open=true;}}
+ window.addEventListener('hashchange',()=>{try{hash();}catch(e){}});
+ let printState=[];window.addEventListener('beforeprint',()=>{printState=[...document.querySelectorAll('details')].map(d=>[d,d.open]);document.querySelectorAll('details').forEach(d=>d.open=true);});window.addEventListener('afterprint',()=>printState.forEach(([d,open])=>d.open=open));
+ document.querySelector('#print').addEventListener('click',()=>window.print());
+ document.querySelector('#export').addEventListener('click',()=>{const payload={version:1,date:'2026-11-12',...state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='童浩-面试练习记录.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ progress();filter();if(location.hash){try{hash();}catch(e){}}
+})();
+</script></body></html>
