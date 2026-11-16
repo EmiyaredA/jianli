@@ -2,6 +2,7 @@
 
 \documentclass{resume}
 \usepackage{xeCJK}
+\usepackage{xcolor}
 \setCJKmainfont[BoldFont=STSongti-SC-Black]{STSongti-SC-Regular}
 \setCJKsansfont{STHeitiSC-Medium}
 \setlist{itemsep=0.1em, topsep=0.15em, leftmargin=1.5pc}
@@ -15,87 +16,89 @@
 \widowpenalty=10000
 \raggedbottom
 
+
+% 待补信息在评审稿中可见，确认事实后逐项替换。
+\definecolor{pendingcolor}{HTML}{795028}
+\newcommand{\pending}[2]{\par\vspace{0.15em}{\small\textcolor{pendingcolor}{\textbf{【待补 #1】}#2}}\par}
+
 \begin{document}
 \pagenumbering{arabic}
 \pagestyle{plain}
 
 \name{童浩}
-
 \basicInfo{
   (+86) 188-5098-6208 \textperiodcentered\
   \href{mailto:Z1310554512@163.com}{Z1310554512@163.com} \textperiodcentered\
   中共党员
 }
 \centerline{\href{https://github.com/EmiyaredA}{\faGithub\ github.com/EmiyaredA}}
+\centerline{求职方向：Agent / 大模型应用开发}
 
 \section{个人摘要}
-商汤科技算法研究员，主要做 Agent 应用、知识检索和文档生成。独立搭建 AI 客服中台原型，参与 PPT 生成、笔记助手及自动评测开发；个人开发开源创作工作台 Future Props Lab。
+商汤科技算法研究员，聚焦 Agent 应用、知识检索与文档生成。独立设计并搭建 AI 客服中台前后端原型，参与 PPT 生成、笔记助手与自动评测开发；具备工具调用、原文证据校验与可编辑文档重建经验，个人开发开源创作工作台 Future Props Lab。
 
-\section{教育与奖项}
-\datedline{\textbf{厦门理工学院}，计算机技术，工学硕士}{2023.09 -- 2026.06}
-\datedline{\textbf{福州大学}，计算机科学与技术，工学学士}{2018.09 -- 2022.06}
-本科排名 20/151（前 15\%）；获国家励志奖学金、一等奖学金；曾任院学生会副主席。
+\section{工作经历与重点项目}
+\datedsubsection{\textbf{商汤科技}｜算法研究员}{2026.07 -- 至今}
+\datedline{算法研究员（实习）}{2024.08 -- 2026.06}
+
+\datedsubsection{\textbf{AI 客服中台}｜独立设计与开发原型}{2026.08 -- 至今}
+将大模型融入客服搭建、在线接待与会话复盘：通过自然语言生成客服配置，结合知识库与业务工具处理咨询，再依据真实会话提出可审核的配置优化建议。
 \begin{itemize}
-  \item 第五届全国大学生集成电路创新创业大赛决赛\textbf{全国二等奖}（2021）。
-  \item 第十一届中国大学生服务外包创新创业大赛\textbf{全国三等奖}（2020）。
+  \item \textbf{Agent 运行与工具调用：}实现多轮工具调用循环，按会话装配已发布配置、历史消息和当前问题，支持知识检索、HTTP 业务工具及转人工；校验工具白名单与参数，将执行结果或错误返回模型继续决策，限制调用轮次并留存工具记录与引用。
+  \item \textbf{混合检索与文档处理：}针对手册章节和 FAQ，实现标题结构、递归、固定窗口及 Q\&A 等分块，保留章节上下文与问答原段关联；融合向量检索和 BM25，支持 RRF 或分数加权，兼顾语义问法与错误码、字段名的词项匹配。
+  \item \textbf{检索 Agent 与证据约束：}设计全文搜索、按需阅读及扩读流程，无需预先分块或向量化；登记已读证据，校验来源、内容哈希与行列范围，\textbf{仅接受已读原文中的有效证据}。以轮次和阅读预算限制探索，支持无相关证据时返回空结果。
+  \item \textbf{人工交接与会话迭代：}接入实时语音，处理插话暂停、误判恢复及人工接单后的 AI 退出与上下文交接；基于真实会话提出配置建议，展示\textbf{差异、理由与消息引用}，经字段及版本校验、人工审核和草稿复测后发布。
+  \item \textbf{检索评测：}维护版本化问题集与参考原文证据，在相同检索词条件下比较生成式与向量路径，统计证据召回、精度、全部证据命中及不可答问题返回空结果的准确性。
 \end{itemize}
+\pending{A1}{当前试用 / 交付状态、验证规模；检索基线与效果、任务成功率或响应耗时。}
+
+\datedsubsection{\textbf{PPT Agent}｜演示系统开发}{2025.01 -- 2025.07}
+搭建 PPT 自动生成演示系统，实现语义 JSON 模板、视觉稿转 HTML 模板、整页生图后重建三种方案。
+\begin{itemize}
+  \item \textbf{模板解析与内容生成：}解析 PPTX 并结合多模态模型识别页型、内容角色与逻辑关系，生成语义 JSON 模板；按大纲匹配模板并填充标题、正文及图片，\textbf{保留原生对象与样式}，支持逐页并发生成、按序归集。
+  \item \textbf{HTML 生成与渲染检查：}将视觉稿转为可复用 HTML / CSS 模板，结合联网搜索与正文整理生成逐页资料和页面；读取浏览器渲染后的元素位置与尺寸，定位越界元素，供修改后重新渲染复检。
+  \item \textbf{整页图转可编辑 PPTX：}结合 Paddle 布局识别、OCR 与样式提取分离文字和视觉素材，用遮罩膨胀及 LaMa 修复背景，按坐标与层级恢复\textbf{原生文本框和独立图片}；支持 PDF / 图像输入，复杂图表及插画保留为图片。
+\end{itemize}
+\pending{P1}{个人负责模块与协作边界、交付状态、测试页数及重建质量；原“大纲与结构生成 2 分钟以内”的页数、模型与计时范围待确认。}
+
+\newpage
+\section{工作项目（续）}
+\datedsubsection{\textbf{笔记 AI}｜检索工作流与上下文适配}{2024.08 -- 2024.12}
+编排 Dify 搜索工作流并实现 Python 适配层，支持笔记内查资料、问答、改写与续写。
+\begin{itemize}
+  \item \textbf{查询理解与检索复用：}结合历史对话将追问改写为独立查询，按类型路由至 arXiv 或 SearXNG；实现资料筛选、向量重排及数量限制，拆分直接问答与搜索工具工作流，以编号关联回答和来源。
+  \item \textbf{文档与选区编辑：}按文档、选区和指令组织上下文，分别返回答案、选区替换内容或续写增量，由笔记应用执行编辑；参与语雀导入，将目录和内容块映射为内部结构。
+\end{itemize}
+\pending{N1}{接入 / 使用状态、个人交付范围与验收结果；可补典型任务的效果或耗时。}
+
+\datedsubsection{\textbf{数据工程}｜执行评测与输出校验}{2024.08 -- 2024.10}
+\begin{itemize}
+  \item \textbf{执行结果评测：}构建 Excel 执行对拍与自动评分，在相同输入下比对规范化结果，校验给定测试用例下的执行结果一致性。原有记录：与人工评分一致性 \textbf{92.4\%}，日均节省评测人力\textbf{超过 4 小时}，推理结果验证准确率 \textbf{85.7\% $\rightarrow$ 97.9\%}。
+  \item \textbf{结构化输出校验：}实现关键字段及文本、日期、数值校验，并设计 GRPO 分层关键词奖励。原有记录：字段命中率 \textbf{70.3\% $\rightarrow$ 89.6\%}；相关指标的样本范围、对照条件及个人贡献待确认。
+\end{itemize}
+\pending{D1}{核对上述指标定义、样本量及统计方式；原“整体生成准确率提升 8.4\%”的相对 / 绝对口径，以及 GRPO 工作时间与本项目日期的对应关系。}
+
+\section{个人开源项目}
+\datedsubsection{\textbf{Future Props Lab（未来道具研究所）}}{开发时间待补}
+\href{https://github.com/EmiyaredA/Future-Props-Lab}{\faGithub\ github.com/EmiyaredA/Future-Props-Lab}
+
+个人开发的创作工作台，统一项目与素材管理，让外部 Agent 与人工在同一份可编辑工程中接续创作。
+\begin{itemize}
+  \item \textbf{面向 Agent 的工具接口：}提供 CLI、Python SDK 与工坊 Skill，适配 Codex、Claude Code、OpenCode 等，支持读取项目、管理素材、精确编辑和导出；用于演示文稿、笔记及视觉创作等工作流。
+  \item \textbf{编辑上下文与执行状态：}提供项目、选区与版本上下文，校验权限、审批及写入冲突；保存执行记录和生成任务状态，支持 Agent 生成与人工改稿衔接。
+\end{itemize}
+\pending{F1}{起止时间、可展示的版本 / 演示及一条完整创作案例；如有实际用户或使用数据，可补可核实记录。}
 
 \section{专业技能}
 \begin{itemize}
-  \item \textbf{应用开发：}Python / FastAPI、React / TypeScript；Agent 工具调用、对话与工作流开发。
-  \item \textbf{知识检索：}文档分块、向量与 BM25 混合检索、生成式检索及原文引用校验。
-  \item \textbf{文档处理：}PPTX 解析与模板填充、HTML 页面生成、布局识别、OCR 及可编辑 PPTX 重建。
-  \item \textbf{评测与输出校验：}执行结果对拍、自动评分、结构化输出校验及 GRPO 奖励函数设计。
+  \item \textbf{应用开发：}Python / FastAPI、React / TypeScript、SQL；Agent 工具调用、对话与工作流编排。
+  \item \textbf{知识检索：}文档分块、向量与 BM25 混合检索、RRF 融合、生成式检索及原文证据校验。
+  \item \textbf{文档与评测：}PPTX 解析、HTML 生成、OCR 与可编辑重建；执行对拍、自动评分与结构化输出校验。
 \end{itemize}
 
-\section{工作经历}
-\datedsubsection{\textbf{商汤科技}，算法研究员}{2026.07 -- 至今}
-\datedline{算法研究员（实习）}{2024.08 -- 2026.06}
-
-\section{重点项目}
-\datedsubsection{\textbf{AI 客服中台}｜商汤科技}{2026.08 -- 至今}
-独立设计并搭建前后端原型，支持通过对话配置客服人设、服务范围、知识库和工具，在表单中修改配置，经文本或语音试用后发布。
-\begin{itemize}
-  \item \textbf{客服 Agent 运行：}客服需根据会话决定直接回答、查资料、调用 HTTP 业务工具或转人工。实现多轮运行循环，装配已发布配置、历史消息与当前问题，校验工具白名单及参数，将执行结果或错误追加到消息中供模型继续决策；限制调用轮次，保存工具记录与引用。
-  \item \textbf{文档分块与问答提取：}手册需保留章节上下文，FAQ 需保留问答对应。实现固定窗口、递归、标题结构、整篇与 Q\&A 分块；标题子块携带祖先标题和父级正文，超长时按 token 再切分；Q\&A 支持模板解析或模型提取，保留原段关联，分开存储检索问法与返回正文。
-  \item \textbf{向量与混合检索：}用户问法与文档用词不同，错误码、字段名又需精确匹配。采用向量检索召回语义相近片段，以 BM25 补充词项匹配，按配置选择 RRF 排名融合或归一化分数加权；建库与查询使用同一 Embedding 模型，Chroma 保存向量、原文及来源。
-  \item \textbf{生成式检索：}答案与适用条件分散在多篇文档时，单次召回可能遗漏上下文。设计检索 Agent 搜索、阅读与扩读原文的流程，无需预先分块或向量化；登记已读证据，\textbf{仅接受已读正文内的有效范围}，校验来源、内容哈希和行列边界。限制探索轮数与阅读预算，预算耗尽后仅允许提交证据，无相关证据可返回空结果。
-  \item \textbf{系统架构与服务迭代：}按知识准备、在线服务和会话迭代组织系统，接入实时语音与渠道；为处理用户插话与人工接单，实现暂停、误判恢复、AI 退出及上下文交接。配置改进以真实会话为依据，展示建议的\textbf{差异、理由和消息引用}，经字段与版本校验、人工审核及草稿复测后发布。
-\end{itemize}
-
-\newpage
-\datedsubsection{\textbf{PPT Agent}｜商汤科技}{2025.01 -- 2025.07}
-搭建 PPT 自动生成演示系统，实现语义 JSON 模板、生成图转 HTML 模板、整页生图后重建三种方案，处理内容与版式匹配及生成后的编辑问题。
-\begin{itemize}
-  \item \textbf{JSON 模板生成：}固定风格汇报需沿用原版式并在 PPT 内改稿。解析 PPTX，结合多模态模型识别页型、内容角色和逻辑关系，整理为语义 JSON 与模板树；将生成内容填入对应的标题、正文和图片位置，保留原生对象、坐标、样式和层级。大纲与幻灯片结构生成在\textbf{ 2 分钟以内}，逐页并发后按序归集。
-  \item \textbf{JSON 模板匹配探索：}仅按页型选模板，难以判断内容关系与布局是否适配。实现树编码匹配原型，以手工结构特征区分关系节点与文本、图片、图表等叶子节点，经排序、空位补齐和层级衰减编码为定长向量，用余弦相似度或欧氏距离排序候选；超出宽深上限的部分会截断。
-  \item \textbf{HTML 模板生成：}为扩充可复用版式，将单页或拆分后的网格视觉稿转为 HTML / CSS，提取结构与样式入库；联网搜索、抓取并整理正文，生成大纲及逐页资料，由模型选择模板并生成页面。各模块按入口组合，原生 PPTX 需另行转换。
-  \item \textbf{HTML 越界检查：}为定位生成页面中的溢出元素，读取浏览器渲染后各元素的实际位置和尺寸，与页面边界比较；先检查内部元素，再检查外层容器，内部已报告越界时不重复上报容器。记录越界元素及位置，供人工或外部编排修改后重新渲染复检；重叠、可读性和内容另作视觉审阅。
-  \item \textbf{整页生图与可编辑重建：}为使整页视觉图能继续改稿，用 Paddle 布局识别、OCR 和样式提取分离元素，经遮罩膨胀、LaMa 背景修复及上层遮挡处理，将图像坐标换算为幻灯片坐标，按前后层级恢复\textbf{原生文本框和独立图片}。支持按大纲逐页生图、失败重试及结果复用，也支持 PDF / 图像输入；复杂图表与插画保留为图片。检索模块已具备，资料尚未接入该方案的大纲调用。
-\end{itemize}
-
-\subsection{\textbf{Future Props Lab（未来道具研究所）}｜个人开源项目}
-\href{https://github.com/EmiyaredA/Future-Props-Lab}{\faGithub\ github.com/EmiyaredA/Future-Props-Lab}
-
-个人开发的开源创作工作台，让视觉创作、演示文稿、笔记、视频剪辑、\mbox{3D 导演台}与 Galgame 工坊共用项目和素材，供跨工具创作时复用。
-\begin{itemize}
-  \item \textbf{Agent 接入与工具接口：}为支持用户自选 Agent，提供 CLI、Python SDK 和工坊 Skill，适配 Codex、Claude Code、OpenCode 等，以统一接口读取项目、管理素材、精确编辑与导出。
-  \item \textbf{编辑状态与任务管理：}为让 Agent 生成与人工改稿使用同一工程，提供项目、选区和版本上下文，校验权限、审批与写入冲突；保存执行记录和生成任务状态，供双方接续修改。
-\end{itemize}
-
-\datedsubsection{\textbf{笔记 AI}｜商汤科技}{2024.08 -- 2024.12}
-用户在笔记中查资料、追问或改写时，需要结合文档上下文与外部资料。编排 Dify 搜索工作流并实现 Python 适配层，接入联网搜索、来源引用与局部编辑。
-\begin{itemize}
-  \item \textbf{查询改写与搜索路由：}多轮追问常省略主题，先结合历史对话补全为独立查询，再按用户指定或自动判断的类型检索；学术类接入 arXiv，网页、科学、视频和社交类接入 SearXNG，无需搜索时返回空资料。
-  \item \textbf{资料筛选与排序：}筛选需兼顾相关性、调用开销和上下文长度。原序路径去除空内容并按来源顺序截取；向量重排路径并行生成文档向量，按查询相似度阈值过滤、排序；均限制返回数量。
-  \item \textbf{回答与工具输出：}同一套检索需支持直接问答及上层助手调用，因此拆分为回答和搜索工具工作流，分别返回答案及来源，或资料、搜索类型与提示。统一摘要、搜索片段和来源信息，以编号组织引用，供回答追溯出处。
-  \item \textbf{选区编辑与笔记导入：}问答、改写与续写的作用范围不同，按文档、选区和指令组织上下文，分别返回答案、选区替换内容或续写增量，由笔记应用执行编辑；另参与语雀导入，将目录和内容块转为内部结构，支持已有笔记迁移。
-\end{itemize}
-
-\datedsubsection{\textbf{数据工程}｜商汤科技}{2024.08 -- 2024.10}
-\begin{itemize}
-  \item \textbf{自动评测：}构建 Excel 执行结果对拍与自动评分，按执行结果判断代码是否等价。自动评测与人工评分一致性达\textbf{ 92.4\%}，日均节省评测人力\textbf{超过 4 小时}；推理结果验证准确率由 85.7\% 提升至\textbf{ 97.9\%}。
-  \item \textbf{奖励函数与输出校验：}设计 GRPO 分层关键词奖励函数，并实现关键字段及文本、日期、数值的输出校验；字段命中率由 70.3\% 提升至\textbf{ 89.6\%}，整体生成准确率提升\textbf{ 8.4\%}。
-\end{itemize}
+\section{教育与奖项}
+\datedline{\textbf{厦门理工学院}｜计算机技术，工学硕士}{2023.09 -- 2026.06}
+\datedline{\textbf{福州大学}｜计算机科学与技术，工学学士}{2018.09 -- 2022.06}
+本科排名 20/151（前 15\%），国家励志奖学金、一等奖学金。全国大学生集成电路创新创业大赛\textbf{全国二等奖}（2021）；中国大学生服务外包创新创业大赛\textbf{全国三等奖}（2020）。
 
 \end{document}

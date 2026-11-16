@@ -9,6 +9,20 @@
 /\!*
 .DS_Store
 *.pdf
+# Keep the current resume and its deliverable export under version control.
+!/resume.pdf
+!/output/pdf/resume-agent.pdf
+
+# Keep output limited to the current resume deliverable.
+/output/*
+!/output/pdf/
+/output/pdf/*
+!/output/pdf/resume-agent.pdf
+
+# Local runtime dependencies, including symlinks into the Codex runtime.
+node_modules
+__pycache__/
+*.pyc
 
 ############################################
 ## LATEX TEMPORARY FILES
