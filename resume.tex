@@ -59,7 +59,7 @@
 
 \newpage
 \section{工作项目（续）}
-\datedsubsection{\textbf{PPT Agent}｜演示系统开发}{2025.01 -- 2025.07}
+\datedsubsection{\textbf{PPT Agent}｜生成流程设计与开发}{2025.01 -- 2025.07}
 搭建 PPT 自动生成演示系统，实现语义 JSON 模板、视觉稿转 HTML 模板、整页生图后重建三种方案。
 \begin{itemize}
   \item \textbf{模板解析与内容生成：}解析 PPTX 并结合多模态模型识别页型、内容角色与逻辑关系，生成语义 JSON 模板；按大纲匹配模板并填充标题、正文及图片，\textbf{保留原生对象与样式}，支持逐页并发生成、按序归集。
@@ -67,14 +67,14 @@
   \item \textbf{整页图转可编辑 PPTX：}结合 Paddle 布局识别、OCR 与样式提取分离文字和视觉素材，用遮罩膨胀及 LaMa 修复背景，按坐标与层级恢复\textbf{原生文本框和独立图片}；支持 PDF / 图像输入，复杂图表及插画保留为图片。
 \end{itemize}
 
-\datedsubsection{\textbf{笔记 AI}｜检索工作流与上下文适配}{2024.08 -- 2024.12}
+\datedsubsection{\textbf{笔记 AI}｜检索工作流与接口开发}{2024.08 -- 2024.12}
 编排 Dify 搜索工作流并实现 Python 适配层，支持笔记内查资料、问答、改写与续写。
 \begin{itemize}
   \item \textbf{查询理解与检索复用：}结合历史对话将追问改写为独立查询，按类型路由至 arXiv 或 SearXNG；实现资料筛选、向量重排及数量限制，拆分直接问答与搜索工具工作流，以编号关联回答和来源。
   \item \textbf{文档与选区编辑：}按文档、选区和指令组织上下文，分别返回答案、选区替换内容或续写增量，由笔记应用执行编辑；参与语雀导入，将目录和内容块映射为内部结构。
 \end{itemize}
 
-\datedsubsection{\textbf{数据工程}｜执行评测与输出校验}{2024.08 -- 2024.10}
+\datedsubsection{\textbf{数据工程}｜数据构建与自动评测}{2024.08 -- 2024.10}
 \begin{itemize}
   \item \textbf{训练数据构建：}基于种子表格设计表头与数据骨架，结合大模型和规则脚本扩展业务样本，生成 Excel、任务指令与执行脚本对应数据；通过多次采样、执行对拍和人工复审筛查异常。
   \item \textbf{执行结果评测：}交叉执行人工标注与模型生成的脚本，在相同输入下生成 Excel，将结果规范化后比对，校验给定测试用例下的执行结果一致性；按结构化维度建立加权评分，支持 A/B 验证与回归评测。
@@ -85,7 +85,7 @@
 % 时间依据：首次代码提交（发布初版）2026-08-03；2026-11-16 仍有代码更新。
 % https://github.com/EmiyaredA/Future-Props-Lab/commit/53b052ee5e896b84d08652a9ae4b68db9ef111a6
 % https://github.com/EmiyaredA/Future-Props-Lab/commit/77cd5f238a7fd138319bd7d43af588cbd9cab49b
-\datedsubsection{\textbf{Future Props Lab（未来道具研究所）}}{2026.08 -- 至今}
+\datedsubsection{\textbf{Future Props Lab（未来道具研究所）}｜独立设计与全栈开发}{2026.08 -- 至今}
 \href{https://github.com/EmiyaredA/Future-Props-Lab}{\faGithub\ github.com/EmiyaredA/Future-Props-Lab}
 
 个人开发的创作工作台，统一项目与素材管理，让外部 Agent 与人工在同一份可编辑工程中接续创作。
